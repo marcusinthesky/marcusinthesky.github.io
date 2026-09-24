@@ -5,19 +5,21 @@ import { Badge, ButtonLink, Card } from "@marcusinthesky/ui";
 import { Download } from "lucide-react";
 
 import { PageHero } from "@/components/page-hero";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Curriculum vitae",
   description: "Public curriculum vitae of Marcus Gawronsky.",
-  alternates: { canonical: "/cv/" },
-};
+  path: "/cv/",
+});
 
 export default function CvPage() {
   return (
-    <div className="page-shell">
+    <div className="page-shell" data-nav="cv">
       <PageHero
         description="A public, privacy-safe account of experience, education, research, and technical practice. The HTML view is the accessible source; a typeset PDF is available for download."
         eyebrow="Curriculum vitae"
+        motif="book"
         title="Work across research and production"
       />
       <div className="border-t border-border py-10">
@@ -59,9 +61,7 @@ export default function CvPage() {
         <div className="space-y-5">
           {experience.map((entry) => (
             <Card key={`${entry.organization}-${entry.period}`}>
-              <p className="font-mono text-xs uppercase tracking-[0.12em] text-accent">
-                {entry.period}
-              </p>
+              <p className="label-md text-primary">{entry.period}</p>
               <h2 className="mt-3 font-serif text-2xl">{entry.role}</h2>
               <p className="mt-1 text-muted-foreground">{entry.organization}</p>
               <ul className="mt-5 space-y-2 pl-5 text-muted-foreground">

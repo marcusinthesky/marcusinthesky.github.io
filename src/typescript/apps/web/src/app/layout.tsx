@@ -1,13 +1,24 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter } from "next/font/google";
 
 import { profile } from "@marcusinthesky/content";
 
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { absoluteUrl, site } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { site } from "@/lib/site";
 
 import "./globals.css";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -17,34 +28,12 @@ export const metadata: Metadata = {
   authors: [{ name: profile.name, url: site.url }],
   creator: profile.name,
   icons: { icon: "/icon.svg" },
-  alternates: {
-    canonical: "/",
-    types: {
-      "application/rss+xml": absoluteUrl("/feed.xml"),
-      "application/feed+json": absoluteUrl("/feed.json"),
-    },
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_ZA",
-    url: site.url,
-    title: site.title,
-    description: site.description,
-    siteName: site.name,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: site.title,
-    description: site.description,
-  },
+  ...pageMetadata({ description: site.description, path: "/" }),
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf8f3" },
-    { media: "(prefers-color-scheme: dark)", color: "#1b1917" },
-  ],
+  colorScheme: "light",
+  themeColor: "#f7f4ec",
 };
 
 const personJsonLd = {
@@ -62,7 +51,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-ZA">
+    <html className={`${fraunces.variable} ${inter.variable}`} lang="en-ZA">
       <body>
         <a
           className="sr-only fixed left-3 top-3 z-50 bg-background p-3 focus:not-sr-only"

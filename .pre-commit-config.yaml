@@ -38,4 +38,3 @@ repos:
         entry: bash -c 'nixfmt --check devenv.nix && statix check devenv.nix && deadnix --fail devenv.nix'
         pass_filenames: false
         files: ^devenv\.nix$
-

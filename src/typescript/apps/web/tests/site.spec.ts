@@ -128,14 +128,14 @@ test("the Galton board provides a completed reduced-motion state", async ({ page
   await page.goto("/");
 
   await expect(page.locator("[data-galton-status]")).toHaveText("40-ball sample");
-  await expect(page.locator(".galton-moving-ball").first()).toBeHidden();
+  await expect(page.locator('[data-galton="ball"]').first()).toBeHidden();
   await expect(page.getByRole("img", { name: "Galton board simulation" })).toBeVisible();
 });
 
 test("the Galton board can pause and resume without JavaScript", async ({ page }) => {
   await page.goto("/");
-  const pause = page.locator(".galton-pause");
-  const movingBall = page.locator(".galton-moving-ball").first();
+  const pause = page.locator('[data-galton="pause"]');
+  const movingBall = page.locator('[data-galton="ball"]').first();
 
   await page.getByText("Pause", { exact: true }).click();
   await expect(pause).toBeChecked();
@@ -145,8 +145,93 @@ test("the Galton board can pause and resume without JavaScript", async ({ page }
   await expect(movingBall).toHaveCSS("animation-play-state", "running");
 });
 
+test("the Galton board replays in place, without navigating", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => {
+    (window as Window & { beforeReplay?: boolean }).beforeReplay = true;
+  });
+  const movingBall = page.locator('[data-galton="ball"]').first();
+  const before = await movingBall.evaluate((ball) => getComputedStyle(ball).animationName);
+
+  // Replay arrives once the sample has landed; activate it as soon as it can be used.
+  const replay = page.getByRole("checkbox", { name: "Replay the simulation" });
+  await page.getByText("Replay", { exact: true }).click({ timeout: 15_000 });
+  await expect(replay).toBeChecked();
+  // Replay stays where it is, so keyboard focus is not lost while the figure reruns.
+  await expect(replay).toBeFocused();
+
+  expect(new URL(page.url()).pathname).toBe("/");
+  expect(
+    await page.evaluate(() => (window as Window & { beforeReplay?: boolean }).beforeReplay),
+  ).toBe(true);
+  const after = await movingBall.evaluate((ball) => getComputedStyle(ball).animationName);
+  expect(after).not.toBe(before);
+});
+
+test("the circulation marquee drifts, and rests as one static row under reduced motion", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const marquee = page.getByRole("region", { name: "Published and presented through" });
+  const track = marquee.locator("ul").first().locator("..");
+  await expect(track).not.toHaveCSS("animation-name", "none");
+  // Only the first copy is reachable; the duplicate that closes the loop is hidden from readers.
+  await expect(marquee.getByRole("link", { name: "arXiv" })).toHaveCount(1);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(track).toHaveCSS("animation-name", "none");
+  await expect(marquee.locator("ul").nth(1)).toBeHidden();
+});
+
+test("specimens stay on the page as the reader scrolls past", async ({ page }) => {
+  await page.goto("/");
+  const plate = page.locator('section[data-chapter="lotus"] figure svg').first();
+  await plate.scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollBy({ top: 300, behavior: "instant" }));
+  await expect(plate).toHaveCSS("opacity", "1");
+});
+
+test("on narrow screens the introduction and prose come before their figures", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto("/");
+  const top = (locator: Locator) => locator.evaluate((node) => node.getBoundingClientRect().top);
+  expect(await top(page.locator("h1"))).toBeLessThan(
+    await top(page.getByRole("link", { name: "Explore the research" })),
+  );
+  expect(
+    await top(
+      page.getByRole("heading", { name: "From mathematical structure to working machinery" }),
+    ),
+  ).toBeLessThan(await top(page.getByRole("img", { name: "Galton board simulation" })));
+});
+
+test("the method index links every method from its records", async ({ page }) => {
+  await page.goto("/research/");
+  const methodLink = page.locator('main a[href^="/research/#method-"]').first();
+  const target = (await methodLink.getAttribute("href"))?.split("#")[1] ?? "";
+  await expect(page.locator(`#${target}`)).toHaveCount(1);
+});
+
+test("a case study mounts its evidence with a full label", async ({ page }) => {
+  await page.goto("/projects/pricing-perspective/");
+  const evidence = page.locator("#evidence");
+  await expect(
+    evidence.getByRole("img", { name: "Pricing Perspective pipeline stage graph" }),
+  ).toBeVisible();
+  for (const term of ["Question", "Method", "Observation", "Limitation", "Source"]) {
+    await expect(evidence.getByText(term, { exact: true })).toBeVisible();
+  }
+  await expect(page.getByRole("note").first()).toBeVisible();
+});
+
 test("machine-readable projections are public", async ({ request }) => {
-  for (const path of ["/data/profile.json", "/feed.xml", "/llms.txt", "/sitemap.xml"]) {
+  for (const path of [
+    "/data/profile.json",
+    "/data/methods.json",
+    "/feed.xml",
+    "/llms.txt",
+    "/sitemap.xml",
+  ]) {
     expect((await request.get(path)).ok()).toBe(true);
   }
 });

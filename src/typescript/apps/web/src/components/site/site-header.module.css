@@ -1,0 +1,35 @@
+/*
+ * Navigation threads (owned by site-header.tsx). Each item's thread sits on the
+ * rule beneath it in that section's chapter colour, drawing in on hover or
+ * keyboard focus.
+ */
+.nav [data-part="thread"] {
+  background-color: var(--chapter);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav a:is(:hover, :focus-visible) [data-part="thread"] {
+  scale: 1;
+}
+
+/* The masthead separates sections with a dot, as on the identity sheet; silent to readers. */
+.primary li + li::before {
+  content: "·" / "";
+  margin-inline: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+/*
+ * The current section keeps its thread. The static header cannot know the route,
+ * so each page declares its section with data-nav and :has() matches it here.
+ * Kept separate from the hover rule: a browser without :has() drops only this one.
+ */
+:root:has(main [data-nav="about"]) .nav [data-nav="about"] [data-part="thread"],
+:root:has(main [data-nav="research"]) .nav [data-nav="research"] [data-part="thread"],
+:root:has(main [data-nav="projects"]) .nav [data-nav="projects"] [data-part="thread"],
+:root:has(main [data-nav="writing"]) .nav [data-nav="writing"] [data-part="thread"],
+:root:has(main [data-nav="cv"]) .nav [data-nav="cv"] [data-part="thread"] {
+  scale: 1;
+}

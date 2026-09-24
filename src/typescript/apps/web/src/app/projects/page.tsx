@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 import { projects } from "@marcusinthesky/content";
-import { MotifRule, ShuttleDivider } from "@marcusinthesky/ui";
+import { MotifRule, ShuttleDivider } from "@marcusinthesky/ui/heritage";
+import { PageHeader } from "@marcusinthesky/ui/patterns";
 
-import { PageHero } from "@/components/page-hero";
-import { ParetoFrontier } from "@/components/pareto-frontier";
-import { ProjectCard } from "@/components/project-card";
+import { ProjectCard } from "@/components/domain/project-card";
+import { ParetoFrontier } from "@/components/figures/pareto-frontier/pareto-frontier";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -17,14 +17,14 @@ export const metadata: Metadata = pageMetadata({
 export default function ProjectsPage() {
   return (
     <div className="page-shell" data-nav="projects">
-      <PageHero
+      <PageHeader
         motif="shuttle"
         description="Public work selected for the strength of its question, evidence, architecture, or explanatory surface—not for repository count."
         eyebrow="Projects"
         title="Research and software as durable systems"
         figure={{
           name: "Pareto frontier",
-          caption: "Candidate decisions → the non-dominated frontier → a choice",
+          note: "Candidate decisions → the non-dominated frontier → a choice",
           content: <ParetoFrontier />,
         }}
       />

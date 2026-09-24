@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 
 import { profile, publications } from "@marcusinthesky/content";
 
-import { JsonLd } from "@/components/json-ld";
-import { AskAi, researchPrompt } from "@/components/ask-ai";
-import { MonteCarloFan } from "@/components/monte-carlo-fan";
-import { PageHero } from "@/components/page-hero";
-import { PublicationCard } from "@/components/publication-card";
+import { PageHeader } from "@marcusinthesky/ui/patterns";
+
+import { PublicationRecord } from "@/components/domain/publication-record";
+import { MonteCarloFan } from "@/components/figures/monte-carlo-fan/monte-carlo-fan";
+import { AskAi, researchPrompt } from "@/components/integrations/ask-ai";
+import { JsonLd } from "@/components/site/json-ld";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -30,23 +31,23 @@ export default function PublicationsPage() {
   return (
     <div className="page-shell" data-chapter="lotus" data-nav="research">
       <JsonLd data={structuredData} />
-      <PageHero
+      <PageHeader
         motif="book"
         description="Canonical paper links and current manuscript status, backed by the same structured records used for machine-readable metadata."
         eyebrow="Publications"
         title="Research outputs"
         figure={{
           name: "Monte Carlo paths",
-          caption: "Simulated paths → quantile bands → a risk summary",
+          note: "Simulated paths → quantile bands → a risk summary",
           content: <MonteCarloFan />,
         }}
       />
       <div className="-mt-6 mb-10">
         <AskAi label="Ask AI about this research" prompt={researchPrompt} />
       </div>
-      <section className="space-y-5 border-t border-border py-14">
+      <section className="mb-14 border-b border-border">
         {publications.map((publication) => (
-          <PublicationCard key={publication.slug} publication={publication} />
+          <PublicationRecord key={publication.slug} publication={publication} />
         ))}
       </section>
       <aside className="mb-16 border-l-2 border-primary pl-5 text-muted-foreground">

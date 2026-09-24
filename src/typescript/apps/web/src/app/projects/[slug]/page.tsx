@@ -2,11 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { projects } from "@marcusinthesky/content";
-import { Badge, ButtonLink } from "@marcusinthesky/ui";
+import {
+  Annotated,
+  PageHeader,
+  Specimen,
+  SpecimenCaption,
+  SpecimenFrame,
+  SpecimenLabel,
+  WorkingPage,
+} from "@marcusinthesky/ui/patterns";
+import { Badge, ButtonLink } from "@marcusinthesky/ui/primitives";
 
-import { BrandIcon } from "@/components/brand-icon";
-import { JsonLd } from "@/components/json-ld";
-import { PageHero } from "@/components/page-hero";
+import { MethodLinks } from "@/components/domain/method-links";
+import { figures } from "@/components/figures";
+import { BrandIcon } from "@/components/integrations/brand-icon";
+import { JsonLd } from "@/components/site/json-ld";
 import { pageMetadata } from "@/lib/metadata";
 
 type ProjectPageProps = { params: Promise<{ slug: string }> };
@@ -31,6 +41,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const project = projects.find((candidate) => candidate.slug === slug);
   if (!project) notFound();
 
+  const { evidence } = project;
+  const Figure = evidence ? figures[evidence.figure].Figure : null;
+
   return (
     <div className="page-shell" data-nav="projects">
       <JsonLd
@@ -44,33 +57,84 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           keywords: project.technologies,
         }}
       />
-      <PageHero description={project.summary} eyebrow="Project case study" title={project.title} />
-      <article className="reading-shell typeset border-t border-border py-14">
-        <p>
-          <strong>Role:</strong> {project.role}
-        </p>
-        {project.narrative.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-        <h2>Technology and method</h2>
-        <div className="not-typeset flex flex-wrap gap-2">
-          {project.technologies.map((technology) => (
-            <Badge key={technology}>{technology}</Badge>
-          ))}
-        </div>
-        <div className="not-typeset mt-8 flex flex-wrap gap-3">
-          {project.links.map((link, index) => (
-            <ButtonLink
-              href={link.url}
-              key={link.url}
-              className="gap-2"
-              variant={index === 0 ? "primary" : "secondary"}
-            >
-              <BrandIcon className="size-4" label={link.label} />
-              {link.label}
-            </ButtonLink>
-          ))}
-        </div>
+      <PageHeader
+        description={project.summary}
+        eyebrow="Project case study"
+        title={project.title}
+      />
+
+      {/* The evidence: one mounted specimen with its full label. */}
+      {evidence && Figure ? (
+        <section
+          aria-labelledby="evidence-title"
+          className="grid scroll-mt-24 grid-cols-[minmax(0,1fr)] items-start gap-8 border-t border-border py-14 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12"
+          id="evidence"
+        >
+          <h2 className="sr-only" id="evidence-title">
+            Evidence
+          </h2>
+          <Specimen>
+            <SpecimenFrame>
+              <Figure />
+            </SpecimenFrame>
+            <SpecimenCaption name={evidence.name} />
+          </Specimen>
+          <SpecimenLabel
+            kind="Evidence"
+            limitation={evidence.limitation}
+            method={evidence.method}
+            observation={evidence.observation}
+            question={evidence.question}
+            source={
+              evidence.source ? (
+                <a
+                  className="underline decoration-border underline-offset-4 hover:decoration-foreground"
+                  href={evidence.source.url}
+                  rel="noreferrer"
+                >
+                  {evidence.source.label}
+                </a>
+              ) : undefined
+            }
+          />
+        </section>
+      ) : null}
+
+      {/* A working page: the account in prose, with limitations and sources in the margin. */}
+      <article className="border-t border-border py-14">
+        <WorkingPage className="typeset">
+          <p>
+            <strong>Role:</strong> {project.role}
+          </p>
+          {project.narrative.map((paragraph) =>
+            typeof paragraph === "string" ? (
+              <p key={paragraph}>{paragraph}</p>
+            ) : (
+              <Annotated key={paragraph.text} note={paragraph.note}>
+                <p>{paragraph.text}</p>
+              </Annotated>
+            ),
+          )}
+          <h2>Technology and method</h2>
+          <div className="flex flex-wrap gap-2">
+            {project.technologies.map((technology) => (
+              <Badge key={technology}>{technology}</Badge>
+            ))}
+          </div>
+          <MethodLinks kind="projects" slug={project.slug} />
+          <div className="flex flex-wrap gap-3">
+            {project.links.map((link, index) => (
+              <ButtonLink
+                href={link.url}
+                key={link.url}
+                variant={index === 0 ? "primary" : "secondary"}
+              >
+                <BrandIcon className="size-4" label={link.label} />
+                {link.label}
+              </ButtonLink>
+            ))}
+          </div>
+        </WorkingPage>
       </article>
     </div>
   );

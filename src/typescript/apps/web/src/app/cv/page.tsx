@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
 import { education, experience } from "@marcusinthesky/content";
-import { Badge, ButtonLink, Card } from "@marcusinthesky/ui";
+import { PageHeader } from "@marcusinthesky/ui/patterns";
+import { Badge, ButtonLink } from "@marcusinthesky/ui/primitives";
 import { Download } from "lucide-react";
 
-import { PageHero } from "@/components/page-hero";
+import { ExperienceCard } from "@/components/domain/experience-card";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -16,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
 export default function CvPage() {
   return (
     <div className="page-shell" data-nav="cv">
-      <PageHero
+      <PageHeader
         description="A public, privacy-safe account of experience, education, research, and technical practice. The HTML view is the accessible source; a typeset PDF is available for download."
         eyebrow="Curriculum vitae"
         motif="book"
@@ -60,16 +61,11 @@ export default function CvPage() {
         </aside>
         <div className="space-y-5">
           {experience.map((entry) => (
-            <Card key={`${entry.organization}-${entry.period}`}>
-              <p className="label-md text-primary">{entry.period}</p>
-              <h2 className="mt-3 font-serif text-2xl">{entry.role}</h2>
-              <p className="mt-1 text-muted-foreground">{entry.organization}</p>
-              <ul className="mt-5 space-y-2 pl-5 text-muted-foreground">
-                {entry.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            </Card>
+            <ExperienceCard
+              entry={entry}
+              headingLevel={2}
+              key={`${entry.organization}-${entry.period}`}
+            />
           ))}
         </div>
       </section>

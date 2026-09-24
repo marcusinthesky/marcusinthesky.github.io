@@ -81,7 +81,10 @@ type HeritageMarkProps = {
   className?: string;
 };
 
-/** One heritage motif at icon scale (16/24/32/48px). Decorative unless given a title. */
+/**
+ * One heritage motif at icon scale (16/24/32/48px). Decorative unless given a
+ * title. At 24px and below it is drawn as a mark: silhouette and main lines only.
+ */
 export function HeritageMark({
   className,
   motif,
@@ -95,6 +98,7 @@ export function HeritageMark({
   return (
     <Motif
       className={`inline-block shrink-0 ${box}${className ? ` ${className}` : ""}`}
+      detail={size === "sm" || size === "md" ? "mark" : undefined}
       motion={motion}
       title={title}
       tone={tone}

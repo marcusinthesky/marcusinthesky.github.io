@@ -2,11 +2,18 @@ import { useId, type CSSProperties, type ReactNode } from "react";
 
 export type MotifTone = "heritage" | "ink" | "sacs" | "uct";
 export type MotifMotion = "none" | "reveal" | "scroll" | "hover";
+/**
+ * Drawing scale. A `mark` (icon scale) keeps only the silhouette and main
+ * lines; the default adds the fine washes and ribs; a `study` (plate scale)
+ * adds the engraver's hatching and veins. One drawing is never merely scaled.
+ */
+export type MotifDetail = "mark" | "study";
 
 type MotifProps = {
   viewBox: string;
   tone?: MotifTone;
   motion?: MotifMotion;
+  detail?: MotifDetail;
   /** Gives the artwork an accessible name; without it the motif is decorative. */
   title?: string;
   className?: string;
@@ -18,6 +25,7 @@ type MotifProps = {
 export function Motif({
   children,
   className,
+  detail,
   motion = "none",
   preserveAspectRatio,
   title,
@@ -31,6 +39,7 @@ export function Motif({
   return (
     <svg
       className={className ? `motif ${className}` : "motif"}
+      data-detail={detail}
       data-motion={motion}
       data-tone={tone}
       focusable="false"

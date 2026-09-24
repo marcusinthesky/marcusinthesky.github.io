@@ -1,0 +1,82 @@
+/* PCA cloud (pca-cloud.tsx): points fade in, axes draw, the frame aligns PC1 horizontally, points
+   project onto it. Unanimated (reduced motion), it rests on the tilted cloud with both components labelled. */
+.fade {
+  animation: fade 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.draw {
+  animation: draw 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.rotate {
+  animation: rotate 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.counterRotate {
+  animation: counter-rotate 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.project {
+  animation: project 1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.ghost {
+  opacity: 0;
+  animation: ghost 1s ease-out both;
+}
+
+.frame {
+  transform-box: view-box;
+}
+
+.label {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes rotate {
+  to {
+    rotate: var(--pca-cloud-angle);
+  }
+}
+
+@keyframes counter-rotate {
+  to {
+    rotate: calc(-1 * var(--pca-cloud-angle));
+  }
+}
+
+@keyframes project {
+  to {
+    translate: var(--pca-cloud-dx) var(--pca-cloud-dy);
+  }
+}
+
+@keyframes ghost {
+  to {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade,
+  .draw,
+  .rotate,
+  .counterRotate,
+  .project,
+  .ghost {
+    animation: none;
+  }
+}

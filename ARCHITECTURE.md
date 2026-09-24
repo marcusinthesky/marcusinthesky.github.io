@@ -6,6 +6,47 @@ The repository has one deployable application and two reusable TypeScript packag
 
 The public CV deliberately remains LaTeX-first. Its HTML representation is a curated projection because parsing template-specific LaTeX into a durable web schema would create more fragile tooling than it removes. Reviewers update the typed projection and LaTeX source together.
 
+## Component hierarchy
+
+Dense semantic hierarchy, shallow runtime hierarchy: a page is conceptually built from many layers, but the DOM does not carry a wrapper per layer.
+
+```text
+foundation   tokens, type, layout utilities, motion        packages/ui/src/foundation
+    ↓
+primitives   action recipe, ButtonLink, Badge               packages/ui/src/primitives
+heritage     Motif, parts, HeritageMark, ornaments          packages/ui/src/heritage
+    ↓
+patterns     Card, Record, Specimen, WorkingPage,           packages/ui/src/patterns
+             PageHeader, SectionHeader, Timeline
+    ↓
+compositions EmblemPlate (Specimen + Motif)                 packages/ui/src/heritage/compositions
+    ↓
+domain       ProjectCard, PublicationRecord, WritingRecord, apps/web/src/components/domain
+             MethodRecord, CirculationRecord
+    ↓
+routes       pages, metadata, feeds                         apps/web/src/app
+```
+
+Nothing points upward. `packages/ui/.oxlintrc.json` enforces the direction inside the UI package, with `import/no-cycle` behind it.
+
+| Question | Where it belongs |
+| --- | --- |
+| A raw colour, type, spacing or motion rule? | `ui/foundation` |
+| Only reusable visual styling? | A CSS utility, not a component |
+| Reusable semantics or interaction? | `ui/primitives` |
+| A reusable arrangement of primitives? | `ui/patterns` |
+| Specific to the heritage visual language? | `ui/heritage` |
+| Knows a Project, Publication or Writing schema? | `apps/web/src/components/domain` |
+| A bespoke scientific figure? | `apps/web/src/components/figures/<name>/`, with a colocated CSS Module |
+| Knows Next routing, metadata or external services? | `apps/web` (`site/`, `integrations/`, `app/`) |
+| Unique to one route? | That route, until reuse appears |
+
+Variants describe presentation (`aspect="wide"`), never domain (`variant="publication"`). Optional content arrives through composable parts (`CardFooter`, `RecordNote`), not flag props.
+
+The UI package publishes explicit subpaths, `@marcusinthesky/ui/primitives`, `/patterns`, `/heritage` and `/globals.css`, so imports say which layer they use. Internal SVG parts are not exported.
+
+Content names figures by id (`figureIds` in `packages/content`) because content cannot import React; `apps/web/src/components/figures/index.ts` maps each id to its component and its place on the site.
+
 ## Tool responsibilities
 
 | Tool | Responsibility |

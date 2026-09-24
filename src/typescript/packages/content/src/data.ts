@@ -1,6 +1,8 @@
 import {
+  circulationSchema,
   educationSchema,
   experienceSchema,
+  methodSchema,
   profileSchema,
   projectSchema,
   publicationSchema,
@@ -97,8 +99,14 @@ export const projects = projectSchema.array().parse([
     summary:
       "A reproducible research programme connecting probability-valued firm information, Wasserstein geometry, spatial interaction, asset co-movement, and portfolio risk—built with explicit provenance, tested pipelines, and machine-checked proofs.",
     narrative: [
-      "Pricing Perspective co-locates research manuscripts, data pipelines, simulations, formal Lean proofs, and a static publication website so that claims and evidence evolve atomically.",
-      "The public site presents three connected papers and their replication surface without placing notebooks, external APIs, or third-party scripts in the critical rendering path.",
+      {
+        text: "Pricing Perspective co-locates research manuscripts, data pipelines, simulations, formal Lean proofs, and a static publication website so that claims and evidence evolve atomically.",
+        note: "In the pipeline, the Lean claim checks are inputs to the manuscript render stage.",
+      },
+      {
+        text: "The public site presents three connected papers and their replication surface without placing notebooks, external APIs, or third-party scripts in the critical rendering path.",
+        note: "The papers are connected in the pipeline as well as in argument: stages of each paper consume results produced by the others.",
+      },
     ],
     role: "Research, modelling, software architecture, and reproducibility",
     technologies: ["Python", "Lean 4", "LaTeX", "Next.js", "Nix", "DVC"],
@@ -107,6 +115,22 @@ export const projects = projectSchema.array().parse([
       { label: "Website", url: "https://marcusinthesky.github.io/PricingPerspective/" },
       { label: "GitHub", url: "https://github.com/marcusinthesky/PricingPerspective" },
     ],
+    evidence: {
+      figure: "reproducibility-graph",
+      name: "Pipeline stage graph",
+      question:
+        "Can every number, figure and claim in the manuscripts be traced to the data, code and environment that produced it?",
+      method:
+        "The 88 DVC stages in dvc.yaml, grouped into families. An edge means a stage in one family declares an output of another as an input. A code-provenance stage hashes the source that every stage depends on.",
+      observation:
+        "The three papers share one corpus, one set of representations and one geometry layer, and cite one another's results. A change upstream re-runs every paper that depends on it.",
+      limitation:
+        "A snapshot of dvc.yaml at commit eb3c1b5 (6 September 2026). Families collapse many stages, and the Monte Carlo studies declare no inputs from the rest of the pipeline, so they appear unconnected.",
+      source: {
+        label: "dvc.yaml at eb3c1b5",
+        url: "https://github.com/marcusinthesky/PricingPerspective/blob/eb3c1b523b797a180ebccbcf0f21310bf00c8661/dvc.yaml",
+      },
+    },
   },
   {
     slug: "precarious-papers",
@@ -274,5 +298,138 @@ export const education = educationSchema.array().parse([
     qualification: "BBusSc Finance",
     period: "2014 — 2018",
     summary: "Finance, Investments & Banking major with an Economics minor.",
+  },
+]);
+
+/** Where one idea appears across the work. Every reference is checked in data.test.ts. */
+export const methods = methodSchema.array().parse([
+  {
+    slug: "optimal-transport",
+    name: "Optimal transport and Wasserstein geometry",
+    question:
+      "What does the geometry of probability distributions say about the firms they describe?",
+    publications: ["systematic-covariance-envelopes", "wasserstein-barycentric-interaction-fields"],
+    projects: ["pricing-perspective"],
+    writing: [],
+    figures: [],
+  },
+  {
+    slug: "covariance-structure",
+    name: "Covariance and factor structure",
+    question:
+      "How much dependence between assets can be recovered, or bounded, without estimating it directly?",
+    publications: [
+      "systematic-covariance-envelopes",
+      "wasserstein-barycentric-interaction-fields",
+      "portfolio-risk-bounds",
+    ],
+    projects: ["pricing-perspective"],
+    writing: [],
+    figures: ["pca-cloud"],
+  },
+  {
+    slug: "representation-learning",
+    name: "Language-model representations",
+    question:
+      "Can a model's representation of a firm become a measurable object in quantitative finance?",
+    publications: [
+      "systematic-covariance-envelopes",
+      "wasserstein-barycentric-interaction-fields",
+      "portfolio-risk-bounds",
+    ],
+    projects: ["pricing-perspective"],
+    writing: ["models-are-markup-tokens-are-features"],
+    figures: [],
+  },
+  {
+    slug: "network-econometrics",
+    name: "Event studies and network econometrics",
+    question:
+      "What does the market learn when a network of financial relationships becomes public?",
+    publications: ["pricing-offshore-services"],
+    projects: ["precarious-papers"],
+    writing: [],
+    figures: [],
+  },
+  {
+    slug: "simulation-and-uncertainty",
+    name: "Simulation and uncertainty",
+    question: "How far can an estimate be trusted, and how does randomness accumulate into a law?",
+    publications: ["portfolio-risk-bounds"],
+    projects: [],
+    writing: ["beyond-average-revenue"],
+    figures: ["galton-board", "monte-carlo-fan", "kalman-filter"],
+  },
+  {
+    slug: "decisions-under-trade-offs",
+    name: "Optimisation and decisions",
+    question: "Which choice should be made when objectives conflict?",
+    publications: ["portfolio-risk-bounds"],
+    projects: [],
+    writing: [],
+    figures: ["pareto-frontier"],
+  },
+  {
+    slug: "reproducible-research",
+    name: "Reproducible research systems",
+    question: "Can every result be traced to the data, code and environment that produced it?",
+    publications: [],
+    projects: ["pricing-perspective"],
+    writing: [
+      "reproducibility-is-a-graph",
+      "vintage-reproducible-ettax-models",
+      "tidal-wave-of-ai-research-in-finance",
+    ],
+    figures: ["reproducibility-graph"],
+  },
+]);
+
+const preprints = publications.filter(({ links }) => links.some(({ label }) => label === "arXiv"));
+const preprintYears = preprints.map(({ year }) => year);
+const thesis = publications.find(({ slug }) => slug === "pricing-offshore-services");
+
+/**
+ * Where the work has been presented, deposited and published, by kind of
+ * relationship. Details are derived from the records above where possible.
+ */
+export const circulation = circulationSchema.array().parse([
+  {
+    kind: "presentation",
+    name: "World Finance & Banking Symposium",
+    href: "https://www.world-finance-conference.com/conference.php?id=34",
+  },
+  {
+    kind: "presentation",
+    name: "World Finance Conference",
+    href: "https://www.world-finance-conference.com/",
+  },
+  {
+    kind: "paper",
+    name: "arXiv",
+    detail: `${preprints.length} preprints, ${Math.min(...preprintYears)}–${Math.max(...preprintYears)}`,
+    href: "https://arxiv.org/search/?query=Gawronsky%2C+Marcus&searchtype=author",
+  },
+  {
+    kind: "paper",
+    name: "OpenUCT",
+    detail: thesis ? `${thesis.status}, ${thesis.year}` : undefined,
+    href: thesis?.links[0]?.url,
+  },
+  {
+    kind: "software",
+    name: "Hugging Face",
+    href: "https://huggingface.co/marcusinthesky",
+  },
+  {
+    kind: "software",
+    name: "GitHub",
+    detail: "Research code and public repositories",
+    href: "https://github.com/marcusinthesky",
+  },
+  {
+    kind: "education",
+    name: "University of Cape Town",
+    detail: education.map(({ qualification }) => qualification.split(" ")[0]).join(" · "),
+    href: "/about/#education",
   },
 ]);

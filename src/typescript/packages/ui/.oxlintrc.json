@@ -1,0 +1,63 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  "rules": {
+    "import/no-cycle": "error"
+  },
+  "overrides": [
+    {
+      "files": ["src/foundation/**", "src/primitives/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/patterns/**", "**/heritage/**"],
+                "message": "Foundation and primitives sit below patterns and heritage (ARCHITECTURE.md)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/heritage/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/patterns/**"],
+                "message": "Heritage marks, parts and ornaments sit below patterns; only heritage/compositions may use them (ARCHITECTURE.md)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/heritage/compositions/**", "src/**/*.stories.tsx"],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    },
+    {
+      "files": ["src/patterns/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/heritage/compositions/**"],
+                "message": "Patterns may use heritage marks, not the compositions built from patterns (ARCHITECTURE.md)."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

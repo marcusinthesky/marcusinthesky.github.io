@@ -1,0 +1,20 @@
+/* The circulation marquee (circulation-marquee.tsx): a slow drift, paused on hover or focus, static under reduced motion. */
+.track {
+  animation: drift 45s linear infinite;
+}
+
+.viewport:is(:hover, :focus-within) .track {
+  animation-play-state: paused;
+}
+
+@keyframes drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

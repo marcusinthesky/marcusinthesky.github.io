@@ -29,6 +29,7 @@ const navigation = [
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
+      <meta name="google-site-verification" content="7MRz7VNdOBPHkBTAPZpRB6dIGyUPIlMn-Mj_LjRDcM0" />
       <div className="page-shell flex min-h-16 items-center justify-between gap-6">
         <Link
           className="flex shrink-0 items-center gap-2.5 font-serif text-sm font-medium uppercase tracking-[0.2em] no-underline"

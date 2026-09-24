@@ -10,7 +10,7 @@
       "ignoreDependencies": ["tailwindcss"]
     },
     "packages/ui": {
-      "entry": ["src/index.ts", ".storybook/*.ts"],
+      "entry": ["src/{primitives,patterns,heritage}/index.ts", ".storybook/*.ts"],
       "project": ["src/**/*.{ts,tsx}"],
       "ignoreDependencies": ["@storybook/react"]
     },

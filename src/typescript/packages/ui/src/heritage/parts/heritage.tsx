@@ -42,6 +42,7 @@ export function Rook({ className, step, transform }: PartProps) {
       <path className="fill-motif-paper" d={ROOK_FACE} fillOpacity={0.4} />
       <g
         className="fill-none stroke-motif-paper"
+        data-layer="fine"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeOpacity={0.6}

@@ -1,0 +1,57 @@
+/* Pareto frontier figure (pareto-frontier.tsx). Every animation fills `both` from a `from`
+   keyframe, so the unanimated state is the finished figure. */
+.pop {
+  animation: pop 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.fade {
+  animation: fade 600ms ease-out both;
+}
+
+.draw {
+  animation: draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.reveal {
+  animation: reveal 400ms ease-out both;
+}
+
+.point {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+@keyframes fade {
+  from {
+    fill: var(--foreground);
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pop,
+  .fade,
+  .draw,
+  .reveal {
+    animation: none;
+  }
+}

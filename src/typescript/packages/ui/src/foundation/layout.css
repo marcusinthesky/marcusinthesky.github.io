@@ -1,0 +1,13 @@
+/*
+ * Page geometry. Utilities rather than components: a shell constrains width and
+ * carries no semantics, so it composes with any element (`<section class="page-shell">`).
+ */
+@utility page-shell {
+  width: min(calc(100% - 2rem), var(--content-width));
+  margin-inline: auto;
+}
+
+@utility reading-shell {
+  width: min(calc(100% - 2rem), var(--reading-width));
+  margin-inline: auto;
+}

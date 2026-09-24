@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./styles/globals.css": "./src/styles/globals.css"
+    "./primitives": "./src/primitives/index.ts",
+    "./patterns": "./src/patterns/index.ts",
+    "./heritage": "./src/heritage/index.ts",
+    "./globals.css": "./src/foundation/globals.css"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

@@ -9,18 +9,33 @@ const pt = ([x, y]: Point) => `${round(x)} ${round(y)}`;
 
 /**
  * An upright pointed petal or leaf with its base at the origin: the outline, the
- * lit half (a paper wash left of the midrib, as on the engraved identity sheet)
- * and the midrib. Parts rotate it into place around its base.
+ * lit half (a paper wash left of the midrib, as on the engraved identity sheet),
+ * the midrib, and engraver's hatching across the shaded half for study scale.
+ * Parts rotate it into place around its base.
  */
 function blade(length: number, width: number) {
   const l = round(length);
   const w = round(width);
   const edge = (side: 1 | -1) =>
     `C${round(side * w)} ${round(-l * 0.26)} ${round(side * w * 0.82)} ${round(-l * 0.7)} 0 ${-l}`;
+  // A point on the shaded (right) edge, so the hatching stops short of the outline.
+  const shaded = (t: number) => {
+    const m = 1 - t;
+    return [
+      3 * m * m * t * w + 3 * m * t * t * w * 0.82,
+      -l * (3 * m * m * t * 0.26 + 3 * m * t * t * 0.7 + t * t * t),
+    ] as const;
+  };
   return {
     d: `M0 0${edge(1)}C${round(-w * 0.82)} ${round(-l * 0.7)} ${-w} ${round(-l * 0.26)} 0 0Z`,
     lit: `M0 0${edge(-1)}Z`,
     rib: `M0 ${round(-l * 0.1)}L0 ${round(-l * 0.86)}`,
+    hatch: [0.22, 0.34, 0.46, 0.58, 0.7]
+      .map((t) => {
+        const [x, y] = shaded(t);
+        return `M${round(x * 0.18)} ${round(y)}L${round(x * 0.76)} ${round(y - l * 0.05)}`;
+      })
+      .join(""),
   };
 }
 
@@ -44,13 +59,22 @@ function BladeGroup({
     <g transform={`translate(${pt(origin)}) rotate(${b.angle})`}>
       <g data-verb={verb} style={stepStyle(step)}>
         <path className={`${fill} stroke-motif-ink`} d={b.d} strokeWidth={2.5} />
-        <path className="fill-motif-paper" d={b.lit} fillOpacity={0.28} />
+        <path className="fill-motif-paper" d={b.lit} data-layer="fine" fillOpacity={0.28} />
         <path
           className="stroke-motif-ink"
           d={b.rib}
+          data-layer="fine"
           fill="none"
           strokeOpacity={0.4}
           strokeWidth={1.25}
+        />
+        <path
+          className="stroke-motif-ink"
+          d={b.hatch}
+          data-layer="study"
+          fill="none"
+          strokeOpacity={0.45}
+          strokeWidth={0.9}
         />
       </g>
     </g>
@@ -121,6 +145,7 @@ export function Lotus({ className, step, transform }: PartProps) {
           <path
             className="stroke-motif-ink"
             d="M116 150L110 132M128 150V122M140 150L146 132"
+            data-layer="fine"
             fill="none"
             strokeOpacity={0.45}
             strokeWidth={1.25}
@@ -150,6 +175,7 @@ function rosePetal(r: number) {
     d: `M${p(0, -6)}C${p(-24, -10)} ${p(-46, -38)} ${p(-44, -66)}C${p(-42, -92)} ${p(-18, -102)} ${p(0, -88)}C${p(18, -102)} ${p(42, -92)} ${p(44, -66)}C${p(46, -38)} ${p(24, -10)} ${p(0, -6)}Z`,
     lit: `M${p(-38, -60)}C${p(-38, -84)} ${p(-24, -94)} ${p(-10, -90)}C${p(-24, -84)} ${p(-32, -74)} ${p(-38, -60)}Z`,
     curl: `M${p(-28, -56)}C${p(-20, -40)} ${p(-8, -38)} ${p(0, -48)}C${p(8, -38)} ${p(20, -40)} ${p(28, -56)}`,
+    veins: `M${p(-4, -12)}Q${p(-14, -30)} ${p(-24, -48)}M${p(4, -12)}Q${p(14, -30)} ${p(24, -48)}M${p(0, -10)}L${p(0, -40)}`,
   };
 }
 const ROSE_OUTER = rosePetal(112);
@@ -177,10 +203,19 @@ function RosePetal({
     <g transform={`translate(${pt(ROSE_ORIGIN)}) rotate(${angle})`}>
       <g data-verb="bloom" style={stepStyle(step)}>
         <path className="fill-motif-rose stroke-motif-ink" d={petal.d} strokeWidth={2.5} />
-        <path className="fill-motif-paper" d={petal.lit} fillOpacity={0.45} />
+        <path className="fill-motif-paper" d={petal.lit} data-layer="fine" fillOpacity={0.45} />
+        <path
+          className="stroke-motif-ink"
+          d={petal.veins}
+          data-layer="study"
+          fill="none"
+          strokeOpacity={0.35}
+          strokeWidth={0.9}
+        />
         <path
           className="stroke-motif-ink"
           d={petal.curl}
+          data-layer="fine"
           fill="none"
           strokeOpacity={0.45}
           strokeWidth={1.5}
@@ -331,6 +366,7 @@ function leaflet(length: number, width: number, bend: number) {
     d: `M0 0C${c(width, -l * 0.3)} ${c(width * 0.6 + b * 0.2, -l * 0.74)} ${tip}C${c(-width * 0.6 + b * 0.2, -l * 0.74)} ${c(-width, -l * 0.3)} 0 0Z`,
     lit: `M0 0C${c(-width, -l * 0.3)} ${c(-width * 0.6 + b * 0.2, -l * 0.74)} ${tip}Q${c(b * 0.06, -l * 0.5)} 0 0Z`,
     rib: `M0 0Q${c(b * 0.06, -l * 0.5)} ${c(b * 0.26, -l * 0.86)}`,
+    shade: `M${c(width * 0.2, -l * 0.08)}Q${c(width * 0.5 + b * 0.06, -l * 0.42)} ${c(b * 0.2, -l * 0.78)}`,
   };
 }
 
@@ -385,10 +421,24 @@ export function PalmBranch({ className, side = "left", step, transform }: PalmBr
             >
               <g data-verb="bloom" style={stepStyle(base + 1 + leaf.i * 0.3)}>
                 <path className="fill-motif-leaf stroke-motif-ink" d={leaf.d} strokeWidth={1.5} />
-                <path className="fill-motif-paper" d={leaf.lit} fillOpacity={0.22} />
+                <path
+                  className="fill-motif-paper"
+                  d={leaf.lit}
+                  data-layer="fine"
+                  fillOpacity={0.22}
+                />
+                <path
+                  className="stroke-motif-ink"
+                  d={leaf.shade}
+                  data-layer="study"
+                  fill="none"
+                  strokeOpacity={0.3}
+                  strokeWidth={0.75}
+                />
                 <path
                   className="stroke-motif-ink"
                   d={leaf.rib}
+                  data-layer="fine"
                   fill="none"
                   strokeOpacity={0.35}
                   strokeWidth={1}

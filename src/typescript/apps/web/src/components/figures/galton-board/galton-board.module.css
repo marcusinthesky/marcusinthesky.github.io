@@ -1,0 +1,180 @@
+/*
+ * Galton board (galton-board.tsx). CSS only: the export ships no JavaScript.
+ *
+ * Replay restarts the figure where it stands. Each click toggles a checkbox, and
+ * :has() swaps every animation to an identical copy of its keyframes; a changed
+ * animation-name restarts the animation from its first frame. Replay itself is
+ * not restarted: once it has appeared it stays, so keyboard focus is never lost.
+ */
+.fall {
+  animation: fall 2.3s cubic-bezier(0.45, 0, 0.55, 1) both;
+}
+
+.draw {
+  animation: draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.settle {
+  animation: settle 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Pause leaves once the last ball lands; Replay arrives after the curve is drawn. */
+.pauseControl {
+  animation: control-out 1ms linear 8.96s both;
+}
+
+.replayControl {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  animation: control-in 1ms linear both;
+}
+
+.board:has(.replay:checked) .fall {
+  animation-name: fall-again;
+}
+
+.board:has(.replay:checked) .draw {
+  animation-name: draw-again;
+}
+
+.board:has(.replay:checked) .settle {
+  animation-name: settle-again;
+}
+
+.board:has(.replay:checked) .pauseControl {
+  animation-name: control-out-again;
+}
+
+.board:has(.pause:checked) :is(.fall, .draw, .settle, .pauseControl, .replayControl) {
+  animation-play-state: paused;
+}
+
+.resumeCopy,
+.staticStatus {
+  display: none;
+}
+
+.board:has(.pause:checked) .pauseCopy {
+  display: none;
+}
+
+.board:has(.pause:checked) .resumeCopy {
+  display: inline;
+}
+
+/* The inputs are visually hidden; their labels carry the keyboard focus ring. */
+.pause:focus-visible + label,
+.replay:focus-visible + label {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+@keyframes fall {
+  from {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  6%,
+  88% {
+    opacity: 1;
+  }
+  to {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fall-again {
+  from {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  6%,
+  88% {
+    opacity: 1;
+  }
+  to {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-again {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+@keyframes settle-again {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+@keyframes control-out {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@keyframes control-out-again {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@keyframes control-in {
+  from {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+  }
+  to {
+    visibility: visible;
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: the settled sample, the drawn curve and a status line; no controls. */
+@media (prefers-reduced-motion: reduce) {
+  .movingBall,
+  .pauseControl,
+  .replayControl {
+    display: none;
+  }
+
+  .settle,
+  .draw {
+    animation: none;
+  }
+
+  .staticStatus {
+    display: inline;
+  }
+}

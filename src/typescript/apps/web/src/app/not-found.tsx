@@ -1,4 +1,5 @@
-import { ButtonLink, HeritageMark } from "@marcusinthesky/ui";
+import { HeritageMark } from "@marcusinthesky/ui/heritage";
+import { ButtonLink } from "@marcusinthesky/ui/primitives";
 
 export default function NotFound() {
   return (

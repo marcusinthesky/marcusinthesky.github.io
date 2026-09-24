@@ -4,6 +4,7 @@ import { join } from "node:path";
 import {
   education,
   experience,
+  methods,
   profile,
   projects,
   publications,
@@ -31,6 +32,7 @@ await Promise.all([
     [...writing].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)),
   ),
   writeJson("cv.json", { profile, experience, education }),
+  writeJson("methods.json", methods),
 ]);
 
 const escapeXml = (value: string) =>
@@ -98,6 +100,9 @@ const projectLines = projects.map(
 const publicationLines = publications.map(
   (publication) => `- [${publication.title}](${publication.links[0].url}) — ${publication.status}`,
 );
+const methodLines = methods.map(
+  (method) => `- [${method.name}](${siteUrl}/research/#method-${method.slug}): ${method.question}`,
+);
 const writingLines = orderedWriting.map(
   (entry) => `- [${entry.title}](${entry.canonicalUrl}): ${entry.summary}`,
 );
@@ -123,6 +128,7 @@ await Bun.write(
 - [Publications JSON](${siteUrl}/data/publications.json)
 - [Projects JSON](${siteUrl}/data/projects.json)
 - [Writing JSON](${siteUrl}/data/writing.json)
+- [Method index JSON](${siteUrl}/data/methods.json)
 `,
 );
 
@@ -143,6 +149,10 @@ ${projectLines.join("\n")}
 ## Publications
 
 ${publicationLines.join("\n")}
+
+## Method index
+
+${methodLines.join("\n")}
 
 ## Writing
 

@@ -78,6 +78,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.55
     letterSpacing: 0em
+  caption:
+    fontFamily: "Inter, Arial, sans-serif"
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0em
   label-lg:
     fontFamily: "Inter, Arial, sans-serif"
     fontSize: 13px
@@ -462,9 +468,9 @@ A page or section declares its chapter with `data-chapter`, which sets the `--ch
 
 Chapter colour has exactly five consumers:
 
-1. **the thread:** a 2px × 48px emphasised rule, drawn at the start of a `SectionHeading` rule and above a `PageHero` eyebrow;
-2. **the navigation thread:** each item in the header and the mobile menu carries its section's chapter; its thread sits on the rule beneath it, persistent for the current section and drawn in on hover or keyboard focus;
-3. **the card top edge:** on hover or focus-within, while the other edges darken to ink;
+1. **the thread:** a 2px × 48px emphasised rule, drawn at the start of a `SectionHeader` rule and above a `PageHeader` eyebrow;
+2. **the navigation thread:** each item in the header and the mobile menu carries its section's chapter; its thread sits on the rule beneath it, persistent for the current section and drawn in on hover or keyboard focus.;
+3. **the card or record top edge:** on hover or focus-within, while a card's other edges darken to ink;
 4. **prose link underlines:** the underline, never the link text;
 5. **the button bottom edge:** primary and secondary buttons draw a 2px thread along their bottom edge on hover or keyboard focus.
 
@@ -583,6 +589,8 @@ Do not write long prose in all caps.
 
 Labels should feel like catalogue notation or a research figure caption, not like promotional “kicker” text.
 
+Spaced capitals carry short identifiers only: dates, statuses, ordinals, field names. Anything a reader genuinely needs to read — a specimen's question or limitation, a record's note, a margin note — uses `caption`: Inter 14px, sentence case. Long paper titles wrap naturally; never shrink them to make records look tidy.
+
 ### Metrics and numerals
 
 `metric-lg` uses tabular numerals. Use it for meaningful counts, percentages and compact research statistics.
@@ -668,12 +676,12 @@ The homepage reads as the opening spread of a field notebook, taken from the ide
 
 Desktop composition:
 
-- **title block:** three columns divided by vertical hairlines. The first holds the display statement with the practice line beneath it; the second the pull-quote "Ideas that survive contact with production."; the third a short serif statement with one primary action and one text link;
-- **plate row:** the Galton board framed as a specimen plate beside chapter 01, which is divided from it by a vertical hairline;
-- **evidence band:** where the work has been published and presented;
-- **chapters:** each chapter opens with its emblem plate, captioned like a field-guide plate: the motif's name, then its Latin binomial where it has one (lotus, *Nelumbo nucifera*; rose, *Rosa persica*).
+- **title block:** two columns divided by a vertical hairline. The first holds the display statement with the practice line beneath it, and the palm as a margin ornament on wide screens only; the second the pull-quote "Ideas that survive contact with production." with one primary action and one text link;
+- **frontispiece:** one substantial specimen with a short label (its question, what to notice, and its source), with chapter 01's prose beside it as its annotation, divided by a vertical hairline. On the homepage the label stays brief; the full record belongs on a detail page. The Galton board holds this place for now; a figure from an actual study replaces it when one is ready, changing when the work changes rather than on every visit;
+- **circulation marquee:** "Published and presented through": a slow, edge-faded marquee of venue marks in one muted tone, linking each to its record. It pauses on hover or keyboard focus and rests as a static, wrapped row under reduced motion. Names and destinations come from the content package's `circulation` record; only the marks are drawn in the app. The same record appears in full on the About page as a static **record of circulation**, grouped by the kind of relationship (presented at, papers and preprints, models and software, education), so a talk, a deposit and a degree are never presented as the same kind of credential;
+- **chapters:** each chapter opens with a section header; its ornament sits in the header, never in a slot beside the work. Research and Writing present compact catalogue records beside their emblem plate, captioned like a field-guide plate: the motif's name, then its Latin binomial (lotus, *Nelumbo nucifera*; rose, *Rosa persica*). The binomials are part of the naturalist's-notebook language: the heraldic motif is presented as a specimen of its plant.
 
-On narrow screens the columns stack in reading order and the vertical hairlines disappear.
+On narrow screens the columns stack in reading order: introduction and actions before ornament, prose before its figure. Decorative ornaments may be omitted there.
 
 "Ask AI" belongs with the research it asks about, not in the hero.
 
@@ -859,7 +867,7 @@ Generic icons should:
 
 ### Heraldic asset vocabulary
 
-Components live in `src/typescript/packages/ui/src/heritage/`: `parts/prain.tsx`, `parts/heritage.tsx`, `parts/institutions.tsx`, `parts/patterns.tsx` (the compass star), `heritage-mark.tsx`, `ornaments.tsx` (rules, dividers, dot field, archival seal) and `motto-callout.tsx`. Original artwork lives in `assets/heritage/`; the file names below refer to it. Hex values shown in `assets/identity_system.png` are illustrative; the YAML front matter is normative.
+Components live in `src/typescript/packages/ui/src/heritage/`: `parts/prain.tsx`, `parts/heritage.tsx`, `parts/institutions.tsx`, `parts/patterns.tsx` (the compass star), `heritage-mark.tsx`, `ornaments.tsx` (rules, dividers, dot field, archival seal), `motto-callout.tsx`, and `compositions/emblem-plate.tsx` (a motif mounted as a specimen). Original artwork lives in `assets/heritage/`; the file names below refer to it. Hex values shown in `assets/identity_system.png` are illustrative; the YAML front matter is normative.
 
 The canonical asset vocabulary includes:
 
@@ -920,6 +928,16 @@ Use Table Mountain as geographic grounding, especially in footer, About, contact
 - `institutions/uct-heraldic.svg`
 
 The anchor/book/lamp/crown can be abstracted into small education motifs. The full heraldic renderings remain contextual and clearly separated from the site's personal identity.
+
+### Two drawing scales
+
+Identity marks and study illustrations are different drawings, not one drawing scaled. `Motif` takes `detail`:
+
+- **mark** (`HeritageMark` at 24px and below): silhouette and main lines only; washes, ribs and highlights are dropped so the shape survives at icon size;
+- **default** (ornaments and marks at 32–48px): adds the paper washes, midribs and curls;
+- **study** (emblem plates): adds the engraver's hatching across shaded halves, petal veins and leaflet shading.
+
+Parts tag their layers `data-layer="fine"` or `data-layer="study"`; the root's `data-detail` decides which render.
 
 ### Motif hierarchy
 
@@ -1011,11 +1029,11 @@ Desktop navigation is a restrained horizontal list.
 - primary sections right, separated by dots (silent to screen readers);
 - the place line "Cape Town / 33.9° S 18.4° E" at the far right on wide screens, as on the identity sheet;
 - 1px bottom rule;
-- sticky behavior permitted if it does not obscure content;
+- sticky, staying paper with ink type as it follows the reader, provided it does not obscure content;
 - active state uses underline/rule, not a pill: the current section's chapter thread sits on the header's bottom rule, and in the mobile menu at the start of its row's rule;
 - no mega-menu for a personal portfolio.
 
-The header is static and cannot know the route. Each page declares its section with `data-nav` on its root, and `site-header.css` matches it with `:has()`. Publications count as Research, and case studies count as Projects.
+The header is static and cannot know the route. Each page declares its section with `data-nav` on its root, and `site-header.module.css` matches it with `:has()`. Publications count as Research, and case studies count as Projects.
 
 Mobile navigation must be fully keyboard accessible and should use a simple disclosure/dialog pattern rather than animation-heavy navigation.
 
@@ -1031,6 +1049,8 @@ The hero contains:
 6. one dominant visual on the right or below.
 
 The visual may be a quantitative animation, a restrained heraldic composition, or a hybrid. Do not make the user parse five unrelated heritage symbols before understanding the work.
+
+Interior pages open with `PageHeader` (a UI pattern); the homepage has its own title block and frontispiece.
 
 ### Section headers
 
@@ -1063,9 +1083,27 @@ Hover should be subtle: border darkening, 1–2px translation, underline change,
 
 Where a card has catalogue metadata (source and date, technology), it sits **beneath the frame** as a museum-label caption (`Card caption`), not as chips inside it.
 
-### Plates
+### Three compositions
 
-A plate (`Plate`) is a framed specimen on a white surface with its label **beneath** the frame: the name in `label-sm` spaced capitals, then one short serif italic line saying what it shows or where it comes from. Use plates for figures (the Galton board, section figures) and for emblem plates. Plates in a tile row stretch to the row's height and keep the specimen centred.
+Pages share one typography, palette and rule system but alternate three compositions, so the notebook never becomes a uniform catalogue of boxes:
+
+1. **Mounted plate** (`Specimen`): an object that rewards inspection, such as a research figure, an explanatory simulation or an emblem. Generous field, explanatory label. Relatively rare and visually prominent.
+2. **Working page** (`WorkingPage`, `Annotated`, `MarginNote`): reasoning in prose, with no box around it. On wide screens a margin holds a short limitation, source or related note beside its paragraph; on narrow screens the note follows the paragraph. Notes never float over content or disappear.
+3. **Catalogue entry** (`Record`): compact ruled rows for surveying a collection, with year, status or date in a rail, then title, attribution, an optional interpretation note, and destinations.
+
+The intended rhythm is large plate → compact records → open prose → detailed figure → short notes.
+
+### Specimens
+
+A specimen (`Specimen`, `SpecimenFrame`, `SpecimenCaption`) is a framed object on a white surface with its label **beneath** the frame: the name in `label-sm` spaced capitals, then one short serif italic line saying what it shows, where it comes from, or its binomial. `SpecimenFrame` takes `aspect` (`square`, `wide` or `auto`). Specimens in a tile row stretch to the row's height and keep the object centred.
+
+Where the object is evidence, `SpecimenLabel` records it with a fixed vocabulary in a fixed order: **Question** (why the investigation exists), **Method** (how the object was produced or examined), **Observation** (what to notice), **Limitation** (where the interpretation stops) and **Source** (where it can be inspected). Fields that are not known are omitted, never invented. Dates, versions and identifiers come from actual content: no invented accession numbers or "verified" stamps.
+
+Case studies mount their evidence (`Project.evidence`) this way; content names the figure by id and the web app maps it to a component.
+
+### Records
+
+Publications, writing and the method index use `Record` rows. A publication shows the scholarly record first (title, authors, year, status, primary link) and its question second, as a clearly separate "The question" note. Records link the methods they belong to; the method index on the Research page lists each method's question and where it appears across papers, projects, writing and figures.
 
 ### Project cards
 
@@ -1080,9 +1118,9 @@ Project cards prioritize:
 
 Use `SPECTEMUR AGENDO` only as a contextual project/engineering thread, never as repeated decoration on every card.
 
-### Publication cards / rows
+### Publication rows
 
-Prefer row-based scholarly structure:
+Publications are records, not cards:
 
 - title;
 - authors;
@@ -1190,7 +1228,9 @@ Default visual grammar:
 - no legends when direct labels work;
 - animation only when it explains process.
 
-A replay control must state what it replays. The static final chart must remain understandable without animation.
+A replay control must state what it replays, and replay is local to its figure: it restarts that figure's animation in place and never navigates or restarts the page. Without script, a checkbox holds the state and `:has()` swaps each animation to an identical copy of its keyframes. Once Replay appears it stays, so keyboard focus is never lost. The static final chart must remain understandable without animation.
+
+Complex figures keep their keyframes and figure-specific selectors in a colocated CSS Module (`figure.module.css`); Tailwind handles layout and common styling.
 
 ### Code blocks
 
@@ -1320,6 +1360,8 @@ Preferred easing for reveal/settle behavior: a strong ease-out such as `cubic-be
 - **archival seal:** the rings draw, then the legend and the lotus appear;
 - **full arms:** optional one-time assembly in a dedicated heritage section, not on every page load.
 
+Specimens persist. A mounted object may draw in as it enters, but it never fades out as the reader moves on, so it can always be revisited.
+
 #### Scroll behavior
 
 Scroll-linked motion should reinforce the reading direction. It must not pin the user into long “scrollytelling” sequences unless the content itself requires that format.
@@ -1391,6 +1433,8 @@ Every exported reusable UI component should have stories covering, where relevan
 - high-contrast/accessibility checks.
 
 Stories should serve as visual development fixtures, interaction tests and accessibility fixtures rather than maintaining separate duplicate examples.
+
+Each public component has its own story file, and the story tree mirrors the code: Foundation, Primitives, Patterns, Heritage, Compositions. `System/Overview` is a demonstration, not a contract. Keyboard-focus stories use a `play` function so the Vitest run checks them.
 
 ### Performance contract
 

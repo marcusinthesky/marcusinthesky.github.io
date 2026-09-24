@@ -3,9 +3,9 @@ import { Fraunces, Inter } from "next/font/google";
 
 import { profile } from "@marcusinthesky/content";
 
-import { JsonLd } from "@/components/json-ld";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { JsonLd } from "@/components/site/json-ld";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SiteHeader } from "@/components/site/site-header";
 import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 

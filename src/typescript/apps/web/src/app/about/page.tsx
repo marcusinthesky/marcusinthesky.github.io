@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
 
 import { education, experience, profile } from "@marcusinthesky/content";
-import {
-  ArchivalSeal,
-  Badge,
-  Card,
-  FloraDivider,
-  HeritageMark,
-  MottoCallout,
-  Timeline,
-} from "@marcusinthesky/ui";
+import { Emblem, FloraDivider, HeritageMark, MottoCallout } from "@marcusinthesky/ui/heritage";
+import { PageHeader, Timeline } from "@marcusinthesky/ui/patterns";
+import { Badge } from "@marcusinthesky/ui/primitives";
 
-import { Emblem } from "@/components/emblem-plate";
-import { PageHero } from "@/components/page-hero";
+import { CirculationRecord } from "@/components/domain/circulation-record";
+import { ExperienceCard } from "@/components/domain/experience-card";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -37,12 +31,12 @@ const principles = [
 export default function AboutPage() {
   return (
     <div className="page-shell" data-chapter="palm" data-nav="about">
-      <PageHero
+      <PageHeader
         description="I work where mathematical research, computation, and real-world systems meet."
         eyebrow="About"
         figure={{
           name: "Palm fronds",
-          caption: "Phoenix dactylifera",
+          note: "Phoenix dactylifera",
           content: <Emblem motif="palm" />,
         }}
         motif="rook"
@@ -50,14 +44,7 @@ export default function AboutPage() {
       />
 
       <section className="grid gap-10 border-t border-border py-14 lg:grid-cols-[0.72fr_1.28fr]">
-        <div>
-          <h2 className="font-serif text-3xl">How evidence is constructed</h2>
-          <ArchivalSeal
-            bottom="Cape Town"
-            className="mt-10 hidden size-40 opacity-80 lg:block"
-            top="Scientia · Spes · Praxis"
-          />
-        </div>
+        <h2 className="font-serif text-3xl">How evidence is constructed</h2>
         <div>
           <p className="max-w-2xl text-lg text-muted-foreground">
             My background spans quantitative research, financial technology, software engineering,
@@ -87,25 +74,17 @@ export default function AboutPage() {
         </div>
         <div className="space-y-5">
           {experience.map((entry) => (
-            <Card key={`${entry.organization}-${entry.period}`}>
-              <p className="label-md text-primary">{entry.period}</p>
-              <h3 className="mt-3 font-serif text-2xl">{entry.role}</h3>
-              <p className="mt-1 text-muted-foreground">
-                {entry.organization} · {entry.location}
-              </p>
-              <ul className="mt-5 space-y-2 pl-5 text-muted-foreground">
-                {entry.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            </Card>
+            <ExperienceCard entry={entry} key={`${entry.organization}-${entry.period}`} />
           ))}
         </div>
       </section>
 
       <FloraDivider />
 
-      <section className="grid gap-10 py-14 lg:grid-cols-[0.72fr_1.28fr]">
+      <section
+        className="grid scroll-mt-24 gap-10 py-14 lg:grid-cols-[0.72fr_1.28fr]"
+        id="education"
+      >
         <div>
           <h2 className="font-serif text-3xl">Education</h2>
           <div className="mt-8">
@@ -122,6 +101,8 @@ export default function AboutPage() {
           }))}
         />
       </section>
+
+      <CirculationRecord />
 
       <aside className="flex items-start gap-4 border-t border-border py-10 text-muted-foreground">
         <HeritageMark motif="rook" size="sm" tone="ink" />

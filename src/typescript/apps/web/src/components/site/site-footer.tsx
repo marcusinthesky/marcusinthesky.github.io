@@ -21,12 +21,6 @@ export function SiteFooter() {
             <HeritageMark motif="star" size="sm" tone="ink" />
             Cape Town · 33.9° S 18.4° E
           </p>
-          <p className="mt-4 font-serif text-sm italic text-muted-foreground">
-            <span lang="la" title="Knowledge · Hope · Practice">
-              Scientia · Spes · Praxis
-            </span>
-            <span className="sr-only"> (knowledge, hope, practice)</span>
-          </p>
         </div>
         <nav aria-label="External profiles">
           <ul className="flex list-none flex-wrap gap-1 p-0">

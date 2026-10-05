@@ -44,6 +44,29 @@ const pillars: readonly (readonly [string, string, HeritageMotif])[] = [
 const galtonSource =
   "https://github.com/marcusinthesky/marcusinthesky.github.io/blob/main/src/typescript/apps/web/src/components/figures/galton-board/galton-board-model.ts";
 
+const projectPreviews: Record<string, { alt: string; label: string; src: string }> = {
+  "pricing-perspective": {
+    alt: "Pricing Perspective homepage with deep-ocean navigation and a hydrographic field illustration.",
+    label: "Pricing Perspective",
+    src: "/screenshots/work/pricing-perspective.webp",
+  },
+  "precarious-papers": {
+    alt: "Precarious Papers homepage showing a network diagram connecting offshore investigations to listed shares and event dates.",
+    label: "Precarious Papers",
+    src: "/screenshots/work/precarious-papers.webp",
+  },
+  solenya: {
+    alt: "Solenya homepage presenting zero-shot discovery for search and recommendations beside a lime-green product illustration.",
+    label: "Solenya · solenya.ai",
+    src: "/screenshots/work/solenya.webp",
+  },
+  insitu: {
+    alt: "InSitu Getting started documentation with example commands and a managed Markdown region.",
+    label: "InSitu · Getting started",
+    src: "/screenshots/work/insitu.webp",
+  },
+};
+
 // The page opens like the first spread of a working notebook: a ruled title
 // block, then a mounted specimen annotated by the chapter's prose, then compact
 // records. The Galton board is an interim frontispiece until a research figure
@@ -152,9 +175,14 @@ export default function HomePage() {
           motif={<HeritageMark motif="shuttle" motion="scroll" size="lg" />}
           title="Research, systems, and tools"
         />
-        <div className="mt-10 grid items-start gap-6 md:grid-cols-3">
+        <div className="mt-10 grid items-start gap-8 md:grid-cols-2">
           {featured.map((project) => (
-            <ProjectCard headingLevel={3} key={project.slug} project={project} />
+            <ProjectCard
+              headingLevel={3}
+              key={project.slug}
+              preview={projectPreviews[project.slug]}
+              project={project}
+            />
           ))}
         </div>
       </section>
@@ -170,7 +198,7 @@ export default function HomePage() {
           <div className="mt-10 grid items-start gap-8 xl:grid-cols-[10rem_minmax(0,1fr)]">
             <EmblemPlate className="max-w-40" motif="lotus" name="Lotus" note="Nelumbo nucifera." />
             <div className="border-b border-border">
-              {publications.slice(0, 3).map((publication) => (
+              {publications.slice(0, 4).map((publication) => (
                 <PublicationRecord
                   headingLevel={3}
                   key={publication.slug}

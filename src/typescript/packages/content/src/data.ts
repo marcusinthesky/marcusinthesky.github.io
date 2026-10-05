@@ -40,17 +40,16 @@ export const profile = profileSchema.parse({
 
 export const publications = publicationSchema.array().parse([
   {
-    slug: "systematic-covariance-envelopes",
-    title:
-      "Systematic Covariance Envelopes from Wasserstein Geometry: Evidence from Language-Model Representations",
+    slug: "information-games-strategic-crowding",
+    title: "Information Games: Strategic Crowding and Firm Repositioning in Language-Model Space",
     authors: ["Marcus Gawronsky", "Chun-Sung Huang"],
-    year: 2024,
-    status: "Submitted / under review",
-    lede: "How much systematic covariance can be recovered from the geometry of probability-valued representations?",
+    year: 2026,
+    status: "WFBS, Riga",
+    lede: "How does competition change firms' responses to opportunity in language-model space?",
     summary:
-      "Uses Wasserstein geometry over language-model representations to study systematic covariance structure without treating text as a bag of features.",
-    keywords: ["Wasserstein geometry", "representation learning", "covariance"],
-    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2410.23447" }],
+      "Develops a rational-share game of firm positioning, separating opportunity-driven reallocation from crowding and tracing how firms respond to changing peer structure in corporate news distributions.",
+    keywords: ["strategic positioning", "language-model space", "computational finance"],
+    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2609.37820" }],
   },
   {
     slug: "wasserstein-barycentric-interaction-fields",
@@ -63,7 +62,7 @@ export const publications = publicationSchema.array().parse([
     summary:
       "Develops spatial factor structures from Wasserstein barycentres of textual representations, connecting distributional geometry with cross-sectional interaction.",
     keywords: ["spatial econometrics", "factor models", "optimal transport"],
-    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2608.21699" }],
+    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2608.29669" }],
   },
   {
     slug: "portfolio-risk-bounds",
@@ -76,7 +75,20 @@ export const publications = publicationSchema.array().parse([
     summary:
       "Studies information-derived dependence structures and distributional fields as a route to portfolio-risk bounds under weaker covariance information.",
     keywords: ["portfolio risk", "distributional fields", "language models"],
-    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2608.21706" }],
+    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2608.29692" }],
+  },
+  {
+    slug: "systematic-covariance-envelopes",
+    title:
+      "Systematic Covariance Envelopes from Wasserstein Geometry: Evidence from Language-Model Representations",
+    authors: ["Marcus Gawronsky", "Chun-Sung Huang"],
+    year: 2024,
+    status: "WFC, Malta 2025",
+    lede: "How much systematic covariance can be recovered from the geometry of probability-valued representations?",
+    summary:
+      "Uses Wasserstein geometry over language-model representations to study systematic covariance structure without treating text as a bag of features.",
+    keywords: ["Wasserstein geometry", "representation learning", "covariance"],
+    links: [{ label: "arXiv", url: "https://arxiv.org/abs/2410.23447" }],
   },
   {
     slug: "pricing-offshore-services",
@@ -147,6 +159,36 @@ export const projects = projectSchema.array().parse([
     links: [{ label: "GitHub", url: "https://github.com/marcusinthesky/precarious-papers" }],
   },
   {
+    slug: "solenya",
+    title: "Solenya",
+    lede: "Search and recommendations that work from the first request.",
+    summary:
+      "A multimodal discovery platform connecting text and image understanding with product search and recommendations, including for visitors without interaction history.",
+    narrative: [
+      "Solenya brings search, listings, recommendations, and agent workflows together around a shared product-discovery system.",
+      "Its public website presents the product through live examples of zero-shot ranking, multimodal search, and recommendations across catalogue surfaces.",
+    ],
+    role: "Co-founder & Chief Technology Officer",
+    technologies: ["Multimodal AI", "Product discovery", "Recommendation systems"],
+    featured: true,
+    links: [{ label: "Website", url: "https://www.solenya.ai/" }],
+  },
+  {
+    slug: "insitu",
+    title: "InSitu",
+    lede: "Keep generated Markdown sections in sync with their source files.",
+    summary:
+      "A small project tool that updates managed regions of Markdown documents from files and other resources while leaving surrounding authored content intact.",
+    narrative: [
+      "InSitu marks generated regions in a document and refreshes them from declared project inputs.",
+      "Its read-only check command can detect stale output without writing, while sync updates the managed sections in place.",
+    ],
+    role: "Creator and maintainer",
+    technologies: ["Python", "Markdown", "Jinja", "Zensical"],
+    featured: true,
+    links: [{ label: "Website", url: "https://marcusinthesky.github.io/insitu/" }],
+  },
+  {
     slug: "talks",
     title: "Talks",
     lede: "Explaining technical ideas without flattening them.",
@@ -157,7 +199,7 @@ export const projects = projectSchema.array().parse([
     ],
     role: "Author and presenter",
     technologies: ["HTML", "Scientific communication", "Data visualisation"],
-    featured: true,
+    featured: false,
     links: [{ label: "GitHub", url: "https://github.com/marcusinthesky/Talks" }],
   },
 ]);
@@ -244,9 +286,11 @@ export const experience = experienceSchema.array().parse([
     location: "Cape Town, South Africa",
     period: "June 2024 — present",
     highlights: [
-      "Lead the technical organisation across research, product, and infrastructure.",
-      "Built production multimodal inference and the supporting cloud and ML platform.",
-      "Designed causal and statistical measurement for large-scale commercial experiments.",
+      "Lead the technical organisation across research, product, and infrastructure, including recruitment and team development, growing the team from zero to nine software engineers, researchers, and data scientists.",
+      "Designed a randomised experiment spanning nearly one million sessions that demonstrated a commercial uplift of more than 27% for the technology in real-world applications.",
+      "Built and operated a heterogeneous Kubernetes cluster on GCP using Nix, Terraform, Helm, and Skaffold, with automated deployment and continuous integration supporting multimodal inference above 250 peak requests per second, real-time monitoring and alerting, and disaster recovery.",
+      "Replatformed product and research surfaces to a Next.js, TypeScript, and Storybook monorepo with perfect audited accessibility, best-practice, and SEO scores.",
+      "Managed and negotiated vendor contracts with consultants, cloud providers, and GCP resellers.",
     ],
   },
   {
@@ -255,8 +299,11 @@ export const experience = experienceSchema.array().parse([
     location: "Cape Town, South Africa",
     period: "January 2021 — April 2024",
     highlights: [
-      "Built data-platform, experimentation, causal-measurement, optimisation, and multimodal-ML systems.",
-      "Developed reusable analytical marts used across pricing, purchasing, and stock management.",
+      "Built a Terraform-managed BigQuery data warehouse with clickstream CDC pipelines, custom Meltano taps, Fivetran, and dbt. Its reusable marts supported pricing, purchasing, and stock management applications, alongside real-time self-service dashboards and reverse ETL use cases for more than 45 business users.",
+      "Managed external consultants providing dashboard user support.",
+      "Adopted and developed A/B tracking, experimentation, and causal-measurement practices that informed front-end, discounting, and delivery changes accounting for an 8% uplift.",
+      "Fine-tuned and deployed vision-language models and hedonic pricing models for stock management and price optimisation.",
+      "Developed optimisation and multi-agent simulation systems for warehouse operations.",
     ],
   },
   {
@@ -265,7 +312,8 @@ export const experience = experienceSchema.array().parse([
     location: "Cape Town, South Africa",
     period: "August 2019 — January 2021",
     highlights: [
-      "Delivered industrial machine-learning work from modelling through deployment and handover.",
+      "Delivered digital-twin product engagements for a global portfolio of industrial manufacturing customers and machine builders.",
+      "Led technical-sales engagements with major Fortune 500 companies, supporting market research and new prospecting strategies.",
     ],
   },
   {

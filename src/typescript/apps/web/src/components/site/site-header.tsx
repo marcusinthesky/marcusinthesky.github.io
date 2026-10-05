@@ -37,11 +37,6 @@ export function SiteHeader() {
           <HeritageMark motif="rook" size="sm" tone="ink" />
           Marcus Gawronsky
         </Link>
-        <span aria-hidden="true" className="hidden h-px flex-1 bg-border lg:block" />
-        {/* The compass star closes the rule where navigation begins. */}
-        <span aria-hidden="true" className="-mx-2 hidden lg:flex">
-          <HeritageMark motif="star" motion="reveal" size="sm" tone="ink" />
-        </span>
         <nav aria-label="Primary" className={`${styles.nav} ${styles.primary} hidden sm:block`}>
           <ul className="flex list-none items-center p-0 label-sm">
             {navigation.map(({ chapter, href, label, section }) => (

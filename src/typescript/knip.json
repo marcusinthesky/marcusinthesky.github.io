@@ -4,7 +4,8 @@
     "apps/web": {
       "entry": [
         "src/app/**/{page,layout,route,not-found,opengraph-image}.{ts,tsx}",
-        "scripts/*.ts"
+        "scripts/*.ts",
+        "src/lib/image-loader.ts"
       ],
       "project": ["src/**/*.{ts,tsx}", "*.{ts,mts}"],
       "ignoreDependencies": ["tailwindcss"]

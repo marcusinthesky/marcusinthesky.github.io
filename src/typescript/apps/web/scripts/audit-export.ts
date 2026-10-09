@@ -10,7 +10,7 @@ const origin = new URL(siteUrl).origin;
 
 // Other repositories publish GitHub Pages project sites under the same origin.
 // Only these prefixes may be linked without resolving inside this export.
-const siblingProjectSites = ["/PricingPerspective/"];
+const siblingProjectSites = ["/PricingPerspective/", "/insitu/"];
 
 const required = [
   "index.html",

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "generate": "bun scripts/generate-public-data.ts",
+    "generate": "bun scripts/generate-public-data.ts && bun scripts/generate-images.ts",
     "build": "bun run generate && next build --webpack && bun scripts/strip-runtime.ts",
     "start": "bun scripts/serve.ts",
     "lint": "oxlint --type-aware src scripts *.ts",
@@ -35,6 +35,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "oxlint": "1.85.0",
+    "sharp": "0.35.4",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2"
   }

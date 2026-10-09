@@ -48,22 +48,22 @@ const projectPreviews: Record<string, { alt: string; label: string; src: string 
   "pricing-perspective": {
     alt: "Pricing Perspective homepage with deep-ocean navigation and a hydrographic field illustration.",
     label: "Pricing Perspective",
-    src: "/screenshots/work/pricing-perspective.webp",
+    src: "/images/screenshots/work/pricing-perspective.webp",
   },
   "precarious-papers": {
     alt: "Precarious Papers homepage showing a network diagram connecting offshore investigations to listed shares and event dates.",
     label: "Precarious Papers",
-    src: "/screenshots/work/precarious-papers.webp",
+    src: "/images/screenshots/work/precarious-papers.webp",
   },
   solenya: {
     alt: "Solenya homepage presenting zero-shot discovery for search and recommendations beside a lime-green product illustration.",
     label: "Solenya · solenya.ai",
-    src: "/screenshots/work/solenya.webp",
+    src: "/images/screenshots/work/solenya.webp",
   },
   insitu: {
     alt: "InSitu Getting started documentation with example commands and a managed Markdown region.",
     label: "InSitu · Getting started",
-    src: "/screenshots/work/insitu.webp",
+    src: "/images/screenshots/work/insitu.webp",
   },
 };
 

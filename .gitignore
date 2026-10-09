@@ -24,6 +24,7 @@ src/typescript/apps/web/public/feed.xml
 src/typescript/apps/web/public/humans.txt
 src/typescript/apps/web/public/llms.txt
 src/typescript/apps/web/public/llms-full.txt
+src/typescript/apps/web/public/images/
 
 # Generated CV build directory (the public PDF projection remains tracked)
 src/latex/cv/build/

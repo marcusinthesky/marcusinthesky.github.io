@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { GALTON_BALL_COUNT } from "../src/components/figures/galton-board/galton-board-model";
 
 const routes = [
   "/",
@@ -127,7 +128,7 @@ test("the Galton board provides a completed reduced-motion state", async ({ page
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  await expect(page.locator("[data-galton-status]")).toHaveText("40-ball sample");
+  await expect(page.locator("[data-galton-status]")).toContainText(String(GALTON_BALL_COUNT));
   await expect(page.locator('[data-galton="ball"]').first()).toBeHidden();
   await expect(page.getByRole("img", { name: "Galton board simulation" })).toBeVisible();
 });
@@ -195,14 +196,14 @@ test("on narrow screens the introduction and prose come before their figures", a
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto("/");
   const top = (locator: Locator) => locator.evaluate((node) => node.getBoundingClientRect().top);
-  expect(await top(page.locator("h1"))).toBeLessThan(
-    await top(page.getByRole("link", { name: "Explore the research" })),
+  const introduction = page.locator("section").filter({ has: page.locator("h1") });
+  expect(await top(introduction.locator("h1"))).toBeLessThan(
+    await top(introduction.getByRole("link").first()),
   );
-  expect(
-    await top(
-      page.getByRole("heading", { name: "From mathematical structure to working machinery" }),
-    ),
-  ).toBeLessThan(await top(page.getByRole("img", { name: "Galton board simulation" })));
+  const frontispiece = page.locator("#frontispiece");
+  expect(await top(frontispiece.getByRole("heading", { level: 2 }))).toBeLessThan(
+    await top(frontispiece.getByRole("figure")),
+  );
 });
 
 test("the method index links every method from its records", async ({ page }) => {
@@ -215,9 +216,16 @@ test("the method index links every method from its records", async ({ page }) =>
 test("a case study mounts its evidence with a full label", async ({ page }) => {
   await page.goto("/projects/pricing-perspective/");
   const evidence = page.locator("#evidence");
-  await expect(
-    evidence.getByRole("img", { name: "Pricing Perspective pipeline stage graph" }),
-  ).toBeVisible();
+  const graph = evidence.locator('svg[role="img"]');
+  await expect(graph).toBeVisible();
+  // The full label is the figure's title followed by its description.
+  const [title, description] = await Promise.all([
+    graph.locator("title").textContent(),
+    graph.locator("desc").textContent(),
+  ]);
+  expect(title?.trim()).toBeTruthy();
+  expect(description?.trim()).toBeTruthy();
+  await expect(graph).toHaveAccessibleName(`${title} ${description}`.replace(/\s+/g, " ").trim());
   for (const term of ["Question", "Method", "Observation", "Limitation", "Source"]) {
     await expect(evidence.getByText(term, { exact: true })).toBeVisible();
   }

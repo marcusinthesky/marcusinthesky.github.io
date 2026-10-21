@@ -60,6 +60,10 @@ Content names figures by id (`figureIds` in `packages/content`) because content 
 | Fumadocs MDX | Typed future local writing collections |
 | Tectonic | Reproducible public CV PDF |
 
+## Browser tests
+
+Playwright tests assert behaviour, not wording. Controls and landmarks are located by role and accessible name, because those names are part of the accessible interface. Headings, prose, captions and figure titles are editorial and change with the copy, so tests reach them through structure (`id`, element role, `data-` hooks) and derive counts from the module that owns them.
+
 ## Performance model
 
 Remote services are publishing inputs, not page-load dependencies. All routes export as files, two self-hosted variable font families (Fraunces, Inter) are served from the export via `next/font` with no third-party font requests, content pages contain no authored client JavaScript, and optional heavy capabilities such as browser Python, TTS, search, and video platforms are deferred until real content requires them.

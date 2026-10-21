@@ -33,9 +33,9 @@ export default function PublicationsPage() {
       <JsonLd data={structuredData} />
       <PageHeader
         motif="book"
-        description="Canonical paper links and current manuscript status, backed by the same structured records used for machine-readable metadata."
+        description="Papers on economic relationships, financial dependence and decisions under uncertainty, bringing together machine learning, optimal transport and financial econometrics."
         eyebrow="Publications"
-        title="Research outputs"
+        title="Papers, preprints and research"
         figure={{
           name: "Monte Carlo paths",
           note: "Simulated paths → quantile bands → a risk summary",

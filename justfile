@@ -19,10 +19,15 @@ cv-build:
     cp src/latex/cv/build/resume.pdf src/typescript/apps/web/public/cv/Marcus-Gawronsky-CV.pdf
 
 cv-check: cv-build
-    tex-fmt --check src/latex/cv/resume.tex src/latex/cv/sections/*.tex
+    test "$(pdfinfo src/latex/cv/build/resume.pdf | awk '/^Pages:/ {print $2}')" = 2
+    tex-fmt --check src/latex/cv/*.tex src/latex/cv/sections/*.tex
     chktex -q -n 1 -n 8 -n 46 src/latex/cv/resume.tex
     if rg -i '([[:alnum:]._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,}|\\mobile|professional references|\\import\{\\sectiondir\}\{references)' src/latex/cv --glob '*.tex'; then echo 'Public CV source privacy check failed' >&2; exit 1; fi
     pdftotext src/latex/cv/build/resume.pdf - | if rg -i '(professional references|references|[[:alnum:]._%+-]+@[[:alnum:].-]+\.[A-Za-z]{2,}|\+27|0[678][0-9][ -]?[0-9]{3})'; then echo 'Public CV privacy check failed' >&2; exit 1; fi
+
+# Check the actual clickable destinations embedded in the generated PDF.
+cv-links: cv-build
+    set -o pipefail; pdfinfo -url src/latex/cv/build/resume.pdf | awk 'NR > 1 {print $3}' | lychee --config lychee.toml --no-progress -
 
 check: cv-check
     cd src/typescript && bun run check

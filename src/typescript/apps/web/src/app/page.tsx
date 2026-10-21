@@ -26,17 +26,17 @@ import { AskAi, researchPrompt } from "@/components/integrations/ask-ai";
 const pillars: readonly (readonly [string, string, HeritageMotif])[] = [
   [
     "Quantitative research",
-    "Models, estimators, geometric representations, uncertainty, portfolio risk, and empirical testing.",
+    "Making relationships measurable: how firms interact, share risk and respond to changing opportunities.",
     "lotus",
   ],
   [
     "Research engineering",
-    "Reproducible computational systems, provenance, validation, automation, and production-quality scientific software.",
+    "Connecting data, assumptions and software so results can be reproduced, inspected and challenged.",
     "shuttle",
   ],
   [
     "Applied AI",
-    "Modern representation models as measurable objects inside statistical and decision systems—not merely as interfaces.",
+    "Building multimodal search and recommendations, then testing their impact through real-world experiments.",
     "star",
   ],
 ];
@@ -61,8 +61,8 @@ const projectPreviews: Record<string, { alt: string; label: string; src: string 
     src: "/images/screenshots/work/solenya.webp",
   },
   insitu: {
-    alt: "InSitu Getting started documentation with example commands and a managed Markdown region.",
-    label: "InSitu · Getting started",
+    alt: "insitu Getting started documentation with example commands and a managed Markdown region.",
+    label: "insitu · Getting started",
     src: "/images/screenshots/work/insitu.webp",
   },
 };
@@ -99,12 +99,13 @@ export default function HomePage() {
           </div>
           <div className="lg:border-l lg:border-border lg:pl-12">
             <p className="max-w-lg text-balance font-serif text-headline-md">
-              Ideas that survive contact with production.
+              Marcus Gawronsky is a researcher and technical founder in Cape Town, building AI
+              systems, testing their impact and developing new ways to measure financial risk.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/research/">Explore the research</ButtonLink>
               <ButtonLink arrow href="/projects/" variant="text">
-                See the systems
+                See the projects
               </ButtonLink>
             </div>
           </div>
@@ -118,10 +119,10 @@ export default function HomePage() {
       >
         <div className="lg:order-2 lg:border-l lg:border-border lg:pl-10">
           <SectionHeader
-            description="My work sits between research and production: probability, representation learning, information geometry, econometrics, optimisation, and the practical problem of making analytical results reproducible."
+            description="Ideas become useful through precise models, empirical tests and reliable software."
             eyebrow="The work"
             index={1}
-            title="From mathematical structure to working machinery"
+            title="From questions to evidence"
           />
           <blockquote className="mt-8 max-w-2xl border-l-2 border-foreground pl-5 font-serif text-headline-sm">
             Can an interesting idea become rigorous enough to defend and robust enough to use?
@@ -150,7 +151,7 @@ export default function HomePage() {
           </Specimen>
           <SpecimenLabel
             className="w-full max-w-md justify-self-center"
-            observation="Forty balls, ten coin flips each: the stacks trace a normal curve."
+            observation="Simple random processes produce predictable structure. Simulation lets us see why."
             question="How do coin flips become a bell curve?"
             source={
               <a

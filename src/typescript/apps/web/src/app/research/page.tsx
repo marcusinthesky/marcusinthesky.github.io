@@ -21,9 +21,9 @@ export default function ResearchPage() {
     <div className="page-shell" data-chapter="lotus" data-nav="research">
       <PageHeader
         motif="lotus"
-        description="Whether information encoded in language-model representations can be given useful mathematical structure—and whether that structure says something about dependence, interaction, and risk. The recurring objects are distributions, geometry, covariance, spatial interaction, and uncertainty."
+        description="Company information describes what businesses do. Financial markets record how securities behave. This research connects the two, using language models and statistical methods to measure economic peers, shared risk and strategic competition."
         eyebrow="Research"
-        title="Distributional information as financial structure"
+        title="Measuring the economic structure behind financial risk"
         figure={{
           name: "Principal components",
           note: "Many observed dimensions → few principal directions",
@@ -34,15 +34,15 @@ export default function ResearchPage() {
         {[
           [
             "Representations",
-            "Language-model representations become empirical objects rather than opaque features.",
+            "What does company information reveal? Language models turn news and disclosures into comparable representations of business activities and risks.",
           ],
           [
-            "Geometry",
-            "Optimal transport and information geometry describe relationships among probability distributions.",
+            "Relationships",
+            "Which firms are economically connected? Optimal transport and statistical models identify information-based peers and shared financial exposure.",
           ],
           [
-            "Evidence",
-            "Econometrics, simulation, replication pipelines, and formalisation constrain the claims.",
+            "Decisions",
+            "What can be learned when return histories are incomplete? Models connect economic differences to portfolio risk, with explicit assumptions and limitations.",
           ],
         ].map(([title, description]) => (
           <Card key={title}>
@@ -58,9 +58,15 @@ export default function ResearchPage() {
           ))}
         </div>
         <div className="mt-10 border-b border-border">
-          {publications.slice(0, 3).map((publication) => (
-            <PublicationRecord headingLevel={3} key={publication.slug} publication={publication} />
-          ))}
+          {publications
+            .filter(({ links }) => links.some(({ label }) => label === "arXiv"))
+            .map((publication) => (
+              <PublicationRecord
+                headingLevel={3}
+                key={publication.slug}
+                publication={publication}
+              />
+            ))}
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
           <ButtonLink href="/publications/">All publications</ButtonLink>

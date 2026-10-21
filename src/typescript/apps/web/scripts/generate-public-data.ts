@@ -5,6 +5,7 @@ import {
   education,
   experience,
   methods,
+  openSourceContributions,
   profile,
   projects,
   publications,
@@ -31,7 +32,7 @@ await Promise.all([
     "writing.json",
     [...writing].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)),
   ),
-  writeJson("cv.json", { profile, experience, education }),
+  writeJson("cv.json", { profile, experience, education, openSourceContributions }),
   writeJson("methods.json", methods),
 ]);
 

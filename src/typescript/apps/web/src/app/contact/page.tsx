@@ -18,9 +18,9 @@ export default function ContactPage() {
   return (
     <div className="page-shell">
       <PageHeader
-        description="For professional, research, and open-source conversations, use one of the public channels below. Direct personal contact details are intentionally not published."
+        description="For research collaborations, professional opportunities, teaching or speaking invitations, connect on LinkedIn. For public software projects, start on GitHub."
         eyebrow="Contact"
-        title="Start with public context"
+        title="Start a conversation"
       />
       <section className="grid max-w-3xl gap-5 border-t border-border py-14 sm:grid-cols-2">
         {links.map((link) => (

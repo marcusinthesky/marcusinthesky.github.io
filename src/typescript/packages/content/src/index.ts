@@ -1,8 +1,10 @@
 export {
   circulation,
   education,
+  leadership,
   experience,
   methods,
+  openSourceContributions,
   profile,
   projects,
   publications,

@@ -22,17 +22,20 @@ function educationMotif(qualification: string) {
 }
 
 const principles = [
-  ["Mathematically explicit", "Assumptions stated, estimators defined, claims bounded."],
-  ["Computationally reproducible", "Every result traceable to its data, code, and environment."],
-  ["Empirically testable", "Claims exposed to data that could contradict them."],
-  ["Operationally useful", "Robust enough to run, inspect, and act on."],
+  ["Mathematically explicit", "State what a model assumes and where its conclusions stop."],
+  ["Computationally reproducible", "Keep the route from data and code to results inspectable."],
+  ["Empirically testable", "Design experiments that leave room for the hypothesis to be wrong."],
+  [
+    "Operationally useful",
+    "Build research that withstands scrutiny and software that withstands use.",
+  ],
 ] as const;
 
 export default function AboutPage() {
   return (
     <div className="page-shell" data-chapter="palm" data-nav="about">
       <PageHeader
-        description="I work where mathematical research, computation, and real-world systems meet."
+        description="Marcus Gawronsky works across statistics, artificial intelligence and financial economics, taking ideas from mathematical foundations to working systems."
         eyebrow="About"
         figure={{
           name: "Palm fronds",
@@ -40,17 +43,16 @@ export default function AboutPage() {
           content: <Emblem motif="palm" />,
         }}
         motif="rook"
-        title="Quantitative researcher. Research engineer. Technology leader."
+        title="Researcher. Founder. Builder."
       />
 
       <section className="grid gap-10 border-t border-border py-14 lg:grid-cols-[0.72fr_1.28fr]">
-        <h2 className="font-serif text-3xl">How evidence is constructed</h2>
+        <h2 className="font-serif text-3xl">Research and practice</h2>
         <div>
           <p className="max-w-2xl text-lg text-muted-foreground">
-            My background spans quantitative research, financial technology, software engineering,
-            applied machine learning, and technical leadership. The thread connecting them is how
-            assumptions become models, models become software, software becomes results, and results
-            become decisions.
+            At Solenya, Marcus built a nine-person technical team, production AI infrastructure and
+            experiments to measure commercial impact. His doctoral research at UCT asks how company
+            information can reveal economic relationships and shared financial risk.
           </p>
           <dl className="mt-8 grid gap-6 border-t border-border pt-6 sm:grid-cols-2">
             {principles.map(([term, detail]) => (
@@ -100,6 +102,17 @@ export default function AboutPage() {
             motif: educationMotif(entry.qualification),
           }))}
         />
+      </section>
+
+      <section className="border-t border-border py-14">
+        <h2 className="font-serif text-3xl">Teaching, leadership and access</h2>
+        <p className="mt-5 max-w-2xl text-muted-foreground">
+          Postgraduate curriculum development for WorldQuant University and UCT student-funding
+          leadership connect technical work with education. At UCT, Marcus helped raise over R2.5
+          million for students facing financial exclusion and served as Director/Co-convenor of the
+          950-participant World Universities Debating Championship, managing more than 60 volunteers
+          and staff.
+        </p>
       </section>
 
       <CirculationRecord />

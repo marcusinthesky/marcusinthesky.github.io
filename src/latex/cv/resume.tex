@@ -8,12 +8,12 @@
 \colorlet{awesome}{awesome-red}
 
 \usepackage{import}
+\input{orcid.tex}
 
 \hypersetup{
   pdftitle={Marcus Gawronsky - Public Curriculum Vitae},
   pdfauthor={Marcus Gawronsky},
-  pdfsubject={Applied AI, decision science, quantitative research and
-  research software engineering},
+  pdfsubject={Applied AI, quantitative research and research engineering},
   pdfkeywords={applied AI, decision science, quantitative finance,
   causal inference, research software}
 }
@@ -31,9 +31,9 @@
 \address{Cape Town, South Africa}
 \linkedin{marcussky}
 \github{marcusinthesky}
-\homepage{orcid.org/0000-0003-0554-0850}
-\position{Applied AI \& Decision Science~~~·~~~Quantitative
-Research~~~·~~~Research Software}
+\orcid{0000-0003-0554-0850}
+\homepage{marcusinthesky.github.io}
+\position{Applied AI~~~·~~~Quantitative Research~~~·~~~Research Engineering}
 
 \makecvfooter
 {}
@@ -43,21 +43,24 @@ Research~~~·~~~Research Software}
 \begin{document}
 \makecvheader
 
-\cvprofile{Applied AI and decision-science leader with experience
-  translating mathematical and computational research into production
-  systems, reproducible evidence and reliable software. Built and led
-  technical teams, scaled multimodal inference, designed large-scale
-  causal measurement, and developed a Finance PhD research programme
-  spanning information geometry, representation learning and
-quantitative finance.}
+\cvprofile{Researcher, technical founder and data scientist with over
+  seven years of experience turning quantitative ideas into working
+  systems and measurable outcomes. Co-founded Solenya, building a
+  nine-person technical team and production multimodal AI
+  infrastructure. Finance PhD candidate at the University of Cape
+  Town, researching economic measurement, financial risk and
+  portfolio decisions through language models and optimal transport.
+  Experience spans experimental design, research software,
+postgraduate teaching and institutional leadership.}
 
 \import{\sectiondir}{experience.tex}
-\import{\sectiondir}{skills.tex}
-\import{\sectiondir}{honors.tex}
+\import{\sectiondir}{software.tex}
 
 \newpage
 
 \import{\sectiondir}{publications.tex}
 \import{\sectiondir}{education.tex}
 \import{\sectiondir}{leadership.tex}
+\import{\sectiondir}{honors.tex}
+\import{\sectiondir}{skills.tex}
 \end{document}

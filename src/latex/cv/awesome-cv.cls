@@ -309,6 +309,9 @@
 % Usage: \linkedin{<linked-in-nick>}
 \newcommand*{\linkedin}[1]{\def\@linkedin{#1}}
 
+% Defines the public ORCID identifier (optional).
+\newcommand*{\orcid}[1]{\def\@orcid{#1}}
+
 % Defines writer's kaggle(optional)
 % Usage: \linkedin{<linked-in-nick>}
 \newcommand*{\kaggle}[1]{\def\@kaggle{#1}}
@@ -435,7 +438,7 @@
               \setbool{isstart}{false}
             }
             {\@headersocialsep}
-          \href{http://\@homepage}{\faHome\ \@homepage}
+          \href{https://\@homepage}{\faHome\ \@homepage}
         }
       \ifthenelse{\isundefined{\@github}}
         {}
@@ -476,6 +479,14 @@
             }
             {\@headersocialsep}
           \href{https://www.linkedin.com/in/\@linkedin}{\faLinkedinSquare\ \@linkedin}
+        }
+      \ifthenelse{\isundefined{\@orcid}}
+        {}
+        {
+          \ifbool{isstart}
+            {\setbool{isstart}{false}}
+            {\@headersocialsep}
+          \href{https://orcid.org/\@orcid}{\orcidicon\ \@orcid}
         }
       \ifthenelse{\isundefined{\@twitter}}
         {}

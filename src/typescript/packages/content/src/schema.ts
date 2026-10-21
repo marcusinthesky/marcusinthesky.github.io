@@ -144,3 +144,9 @@ export type Method = z.infer<typeof methodSchema>;
 export type Circulation = z.infer<typeof circulationSchema>;
 export type Experience = z.infer<typeof experienceSchema>;
 export type Education = z.infer<typeof educationSchema>;
+
+export const openSourceContributionSchema = z.object({
+  project: z.string().min(1),
+  summary: z.string().min(1),
+  url,
+});

@@ -20,7 +20,7 @@ export default function BlogPage() {
     <div className="page-shell" data-chapter="rose" data-nav="writing">
       <PageHeader
         motif="rose"
-        description="The machinery around the research: reproducibility, computational provenance, research infrastructure, modelling choices, and the consequences of treating analysis as software. Some essays are published elsewhere; this site keeps a durable index."
+        description="The decisions behind quantitative work: choosing models, evaluating experiments, reproducing results and understanding the opportunities and uncertainty introduced by AI."
         eyebrow="Writing"
         title="Working notes on research, software, and evidence"
         figure={{

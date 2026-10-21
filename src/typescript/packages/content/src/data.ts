@@ -3,6 +3,7 @@ import {
   educationSchema,
   experienceSchema,
   methodSchema,
+  openSourceContributionSchema,
   profileSchema,
   projectSchema,
   publicationSchema,
@@ -13,9 +14,9 @@ export const profile = profileSchema.parse({
   name: "Marcus Gawronsky",
   givenName: "Marcus",
   familyName: "Gawronsky",
-  headline: "Applied AI, decision science, quantitative research, and reliable software",
+  headline: "Applied AI · Quantitative Research · Research Engineering",
   summary:
-    "I turn mathematical and computational research into reproducible evidence, working systems, and tools that can be inspected, tested, and trusted.",
+    "Researcher and technical founder building AI systems, developing statistical methods and making quantitative research reproducible. Based in Cape Town, South Africa.",
   location: "Cape Town, South Africa",
   roles: ["Technology leader", "Quantitative researcher", "Research software engineer"],
   interests: [
@@ -44,7 +45,7 @@ export const publications = publicationSchema.array().parse([
     title: "Information Games: Strategic Crowding and Firm Repositioning in Language-Model Space",
     authors: ["Marcus Gawronsky", "Chun-Sung Huang"],
     year: 2026,
-    status: "WFBS, Riga",
+    status: "Preprint; accepted for World Finance & Banking Symposium, Riga (2026)",
     lede: "How does competition change firms' responses to opportunity in language-model space?",
     summary:
       "Develops a rational-share game of firm positioning, separating opportunity-driven reallocation from crowding and tracing how firms respond to changing peer structure in corporate news distributions.",
@@ -83,7 +84,7 @@ export const publications = publicationSchema.array().parse([
       "Systematic Covariance Envelopes from Wasserstein Geometry: Evidence from Language-Model Representations",
     authors: ["Marcus Gawronsky", "Chun-Sung Huang"],
     year: 2024,
-    status: "WFC, Malta 2025",
+    status: "Preprint; presented at World Finance Conference, Malta (2025)",
     lede: "How much systematic covariance can be recovered from the geometry of probability-valued representations?",
     summary:
       "Uses Wasserstein geometry over language-model representations to study systematic covariance structure without treating text as a bag of features.",
@@ -94,7 +95,7 @@ export const publications = publicationSchema.array().parse([
     slug: "pricing-offshore-services",
     title: "Pricing Offshore Services: Evidence from the Paradise Papers",
     authors: ["Marcus Gawronsky"],
-    year: 2022,
+    year: 2021,
     status: "Master's thesis",
     summary:
       "An event study combining graph theory, network econometrics, and spatial econometrics to examine offshore-service pricing.",
@@ -107,16 +108,16 @@ export const projects = projectSchema.array().parse([
   {
     slug: "pricing-perspective",
     title: "Pricing Perspective",
-    lede: "Can information extracted from language models become a measurable object in quantitative finance?",
+    lede: "Can company information reveal economic relationships and financial risk?",
     summary:
-      "A reproducible research programme connecting probability-valued firm information, Wasserstein geometry, spatial interaction, asset co-movement, and portfolio risk—built with explicit provenance, tested pipelines, and machine-checked proofs.",
+      "A quantitative-finance research programme connecting language-model representations, optimal transport and portfolio risk, with software for empirical tests, simulation and formal verification.",
     narrative: [
       {
         text: "Pricing Perspective co-locates research manuscripts, data pipelines, simulations, formal Lean proofs, and a static publication website so that claims and evidence evolve atomically.",
         note: "In the pipeline, the Lean claim checks are inputs to the manuscript render stage.",
       },
       {
-        text: "The public site presents three connected papers and their replication surface without placing notebooks, external APIs, or third-party scripts in the critical rendering path.",
+        text: "The research software connects financial data, mathematical models and empirical tests in a reproducible environment.",
         note: "The papers are connected in the pipeline as well as in argument: stages of each paper consume results produced by the others.",
       },
     ],
@@ -147,7 +148,7 @@ export const projects = projectSchema.array().parse([
   {
     slug: "precarious-papers",
     title: "Precarious Papers",
-    lede: "What does the market learn from public financial-data breaches?",
+    lede: "What happens when hidden financial relationships become public?",
     summary:
       "An empirical investigation of offshore entities, leaked disclosures, network structure, and market pricing, combining event studies, graph theory, and reproducible analysis.",
     narrative: [
@@ -166,21 +167,24 @@ export const projects = projectSchema.array().parse([
       "A multimodal discovery platform connecting text and image understanding with product search and recommendations, including for visitors without interaction history.",
     narrative: [
       "Solenya brings search, listings, recommendations, and agent workflows together around a shared product-discovery system.",
-      "Its public website presents the product through live examples of zero-shot ranking, multimodal search, and recommendations across catalogue surfaces.",
+      "As co-founder and CTO, Marcus built a nine-person technical team and production inference infrastructure. A randomised retail experiment estimated a 27.14% revenue-per-user uplift (90% CI: 14.0%–41.9%).",
     ],
     role: "Co-founder & Chief Technology Officer",
     technologies: ["Multimodal AI", "Product discovery", "Recommendation systems"],
     featured: true,
-    links: [{ label: "Website", url: "https://www.solenya.ai/" }],
+    links: [
+      { label: "Website", url: "https://www.solenya.ai/" },
+      { label: "Published experiment", url: "https://www.solenya.ai/blog/24-ab-test-myrunway" },
+    ],
   },
   {
     slug: "insitu",
-    title: "InSitu",
+    title: "insitu",
     lede: "Keep generated Markdown sections in sync with their source files.",
     summary:
-      "A small project tool that updates managed regions of Markdown documents from files and other resources while leaving surrounding authored content intact.",
+      "A Python tool that keeps research documents connected to source files, queries and templates, with checks for stale content.",
     narrative: [
-      "InSitu marks generated regions in a document and refreshes them from declared project inputs.",
+      "insitu marks generated regions in a document and refreshes them from declared project inputs.",
       "Its read-only check command can detect stale output without writing, while sync updates the managed sections in place.",
     ],
     role: "Creator and maintainer",
@@ -205,6 +209,39 @@ export const projects = projectSchema.array().parse([
 ]);
 
 export const writing = writingSchema.array().parse([
+  {
+    slug: "mega-ipos-ai-economic-measurement",
+    title: "No returns: Mega-IPOs and the promise of AI as economic measurement",
+    summary:
+      "Mega-IPOs, the convergence of public and private markets, and the case for a new approach to financial measurement.",
+    source: "Pricing Perspective",
+    publishedAt: "2026-10-13",
+    canonicalUrl:
+      "https://marcusinthesky.github.io/PricingPerspective/blog/mega-ipos-ai-economic-measurement/",
+    local: false,
+  },
+  {
+    slug: "what-are-we-studying-ai-in-finance",
+    title: "What are we actually studying when we study AI in finance?",
+    summary:
+      "AI in finance plays three distinct roles — a tool for financial practice, a source of economic change, and a means of measurement — and each demands different evidence.",
+    source: "Pricing Perspective",
+    publishedAt: "2026-10-09",
+    canonicalUrl:
+      "https://marcusinthesky.github.io/PricingPerspective/blog/what-are-we-studying-ai-in-finance/",
+    local: false,
+  },
+  {
+    slug: "language-models-markowitz-moment",
+    title: "Do language models in finance need a Markowitz moment?",
+    summary:
+      "Language models read individual companies remarkably well; the harder question, as Markowitz taught finance, is what that information means together inside a portfolio.",
+    source: "Pricing Perspective",
+    publishedAt: "2026-10-07",
+    canonicalUrl:
+      "https://marcusinthesky.github.io/PricingPerspective/blog/language-models-markowitz-moment/",
+    local: false,
+  },
   {
     slug: "models-are-markup-tokens-are-features",
     title: "Models are Markup, Tokens are Features",
@@ -255,7 +292,7 @@ export const writing = writingSchema.array().parse([
     summary:
       "An experiment-analysis perspective on commercial impact beyond a single average treatment effect.",
     source: "Solenya",
-    publishedAt: "2026-01-24",
+    publishedAt: "2026-05-06",
     canonicalUrl: "https://www.solenya.ai/blog/24-ab-test-myrunway",
     local: false,
   },
@@ -286,24 +323,29 @@ export const experience = experienceSchema.array().parse([
     location: "Cape Town, South Africa",
     period: "June 2024 — present",
     highlights: [
-      "Lead the technical organisation across research, product, and infrastructure, including recruitment and team development, growing the team from zero to nine software engineers, researchers, and data scientists.",
-      "Designed a randomised experiment spanning nearly one million sessions that demonstrated a commercial uplift of more than 27% for the technology in real-world applications.",
-      "Built and operated a heterogeneous Kubernetes cluster on GCP using Nix, Terraform, Helm, and Skaffold, with automated deployment and continuous integration supporting multimodal inference above 250 peak requests per second, real-time monitoring and alerting, and disaster recovery.",
-      "Replatformed product and research surfaces to a Next.js, TypeScript, and Storybook monorepo with perfect audited accessibility, best-practice, and SEO scores.",
-      "Managed and negotiated vendor contracts with consultants, cloud providers, and GCP resellers.",
+      "Built and led a nine-person team of engineers, researchers and data scientists across AI research, product development and infrastructure.",
+      "Designed a randomised experiment spanning nearly one million sessions, estimating a 27.14% revenue-per-user uplift (90% CI: 14.0%–41.9%) for multimodal product discovery.",
+      "Built production GPU infrastructure supporting over 250 inference requests per second at peak, with automated deployment, monitoring and disaster recovery.",
+      "Led technical strategy, architecture, recruitment and supplier relationships; participated in fundraising and commercial engagements.",
     ],
   },
   {
     organization: "MyRunway",
-    role: "Senior Data Scientist; Data Scientist",
+    role: "Senior Data Scientist",
     location: "Cape Town, South Africa",
-    period: "January 2021 — April 2024",
+    period: "c. 2023 — April 2024",
     highlights: [
-      "Built a Terraform-managed BigQuery data warehouse with clickstream CDC pipelines, custom Meltano taps, Fivetran, and dbt. Its reusable marts supported pricing, purchasing, and stock management applications, alongside real-time self-service dashboards and reverse ETL use cases for more than 45 business users.",
-      "Managed external consultants providing dashboard user support.",
-      "Adopted and developed A/B tracking, experimentation, and causal-measurement practices that informed front-end, discounting, and delivery changes accounting for an 8% uplift.",
-      "Fine-tuned and deployed vision-language models and hedonic pricing models for stock management and price optimisation.",
-      "Developed optimisation and multi-agent simulation systems for warehouse operations.",
+      "Developed experimentation and causal-measurement practices to evaluate commercial and operational decisions.",
+      "Deployed vision-language and statistical pricing models, alongside optimisation and multi-agent simulation systems for retail operations.",
+    ],
+  },
+  {
+    organization: "MyRunway",
+    role: "Data Scientist",
+    location: "Cape Town, South Africa",
+    period: "January 2021 — c. 2023",
+    highlights: [
+      "Built a cloud data warehouse and analytical infrastructure supporting pricing, purchasing and stock management for more than 45 business users.",
     ],
   },
   {
@@ -312,17 +354,53 @@ export const experience = experienceSchema.array().parse([
     location: "Cape Town, South Africa",
     period: "August 2019 — January 2021",
     highlights: [
-      "Delivered digital-twin product engagements for a global portfolio of industrial manufacturing customers and machine builders.",
-      "Led technical-sales engagements with major Fortune 500 companies, supporting market research and new prospecting strategies.",
+      "Delivered industrial machine-learning and digital-twin engagements for international manufacturers and equipment providers, combining model development, validation and client-facing technical work.",
     ],
   },
   {
-    organization: "WorldQuant University via Hubble Studios",
-    role: "Lecturer & Subject Matter Expert in Financial Engineering",
+    organization: "WorldQuant University, via Hubble Studios",
+    role: "Financial Engineering Subject Matter Expert",
     location: "Cape Town, South Africa",
     period: "September 2018 — February 2019",
     highlights: [
-      "Developed graduate material covering risk, simulation, machine learning, and macroeconomic modelling.",
+      "Developed postgraduate learning materials in financial risk modelling, simulation, machine learning and macroeconomic modelling for the MSc in Financial Engineering.",
+    ],
+  },
+  {
+    organization: "NMRQL Research",
+    role: "Research Intern",
+    location: "Cape Town, South Africa",
+    period: "May — July 2018",
+    highlights: ["Applied natural-language models to financial risk-management problems."],
+  },
+]);
+
+export const leadership = experienceSchema.array().parse([
+  {
+    organization: "University of Cape Town",
+    role: "SRC Treasurer-General, Student Parliament Speaker & University Governance",
+    location: "Cape Town, South Africa",
+    period: "2015 — 2017",
+    highlights: [
+      "Served on university finance and student-funding committees, contributed to the 2016 UCT Fee Proposal, and helped raise over R2.5 million to support students facing financial exclusion.",
+    ],
+  },
+  {
+    organization: "University of Cape Town",
+    role: "Vice-chair Debating Union",
+    location: "Cape Town, South Africa",
+    period: "2014",
+    highlights: [
+      "Vice-chair of UCT's oldest society, with over 150 years of history. Convenor of the 150th Year Open; competed at the Oxford and Cambridge IVs.",
+    ],
+  },
+  {
+    organization: "World Universities Debating Championship",
+    role: "Director/Co-convenor",
+    location: "Cape Town, South Africa",
+    period: "2014 — 2015; 2019",
+    highlights: [
+      "Helped secure and deliver a championship involving approximately 950 participants. Managed more than 60 volunteers and staff, coordinating planning and fundraising. Helped secure R0.6 million in funding.",
     ],
   },
 ]);
@@ -332,20 +410,19 @@ export const education = educationSchema.array().parse([
     institution: "University of Cape Town",
     qualification: "PhD Candidate in Finance",
     period: "2022 — expected 2027",
-    summary:
-      "Research in spatial econometrics, representation learning, functional data analysis, and information geometry.",
+    summary: "Information geometry, representation learning and financial econometrics.",
   },
   {
     institution: "University of Cape Town",
-    qualification: "MSc Advanced Analytics & Decision Sciences",
+    qualification: "MSc Statistics with Data Science (olim Advanced Analytics & Decision Science)",
     period: "2019 — 2021",
-    summary: "Major in Statistics with Data Science; thesis on pricing offshore services.",
+    summary: "Thesis: Pricing Offshore Services: Evidence from the Paradise Papers.",
   },
   {
     institution: "University of Cape Town",
-    qualification: "BBusSc Finance",
+    qualification: "BBusSc Finance, Banking and Investments (olim Finance)",
     period: "2014 — 2018",
-    summary: "Finance, Investments & Banking major with an Economics minor.",
+    summary: "Economics minor. Class Medal in Natural Resource Economics.",
   },
 ]);
 
@@ -479,5 +556,19 @@ export const circulation = circulationSchema.array().parse([
     name: "University of Cape Town",
     detail: education.map(({ qualification }) => qualification.split(" ")[0]).join(" · "),
     href: "/about/#education",
+  },
+]);
+
+export const openSourceContributions = openSourceContributionSchema.array().parse([
+  {
+    project: "Hugging Face transformers",
+    summary: "Proposed Optuna multi-objective hyperparameter optimisation support.",
+    url: "https://github.com/huggingface/transformers/issues/25657",
+  },
+  {
+    project: "Hugging Face peft",
+    summary:
+      "Contributed a sparse-matrix token fine-tuning implementation for selectively training token embeddings.",
+    url: "https://github.com/huggingface/peft/pull/1541",
   },
 ]);

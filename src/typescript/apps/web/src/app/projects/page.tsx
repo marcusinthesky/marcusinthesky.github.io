@@ -19,9 +19,9 @@ export default function ProjectsPage() {
     <div className="page-shell" data-nav="projects">
       <PageHeader
         motif="shuttle"
-        description="Public work selected for the strength of its question, evidence, architecture, or explanatory surface—not for repository count."
+        description="Research, software and applied AI: from original questions to systems that can be tested, reproduced and used."
         eyebrow="Projects"
-        title="Research and software as durable systems"
+        title="Selected projects"
         figure={{
           name: "Pareto frontier",
           note: "Candidate decisions → the non-dominated frontier → a choice",

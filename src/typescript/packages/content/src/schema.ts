@@ -85,7 +85,7 @@ export const writingSchema = z.object({
   title: z.string().min(1),
   summary: z.string().min(1),
   source: z.string().min(1),
-  publishedAt: z.iso.date().optional(),
+  publishedAt: z.iso.date(),
   canonicalUrl: url,
   local: z.boolean().default(false),
 });
@@ -110,7 +110,7 @@ export const methodSchema = z.object({
  * same kind of credential.
  */
 export const circulationSchema = z.object({
-  kind: z.enum(["presentation", "editorial", "paper", "software", "education"]),
+  kind: z.enum(["presentation", "paper", "software", "education"]),
   name: z.string().min(1),
   /** What happened there, when content supports it. */
   detail: z.string().min(1).optional(),

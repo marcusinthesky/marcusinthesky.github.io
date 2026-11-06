@@ -234,10 +234,12 @@ export const writing = writingSchema.array().parse([
   {
     slug: "exordio-spell-good-beginnings",
     title: "Exordio: A Spell for Good Beginnings",
-    summary: "A reflection on beginnings, linked to the original LinkedIn essay.",
-    source: "LinkedIn",
+    summary:
+      "Why a repository's knowledge, tooling, validation rules and reproducible environment matter for building software with AI agents.",
+    source: "Exordio",
+    publishedAt: "2026-11-03",
     canonicalUrl:
-      "https://www.linkedin.com/pulse/exordio-spell-good-beginnings-marcus-gawronsky-fcz1f/",
+      "https://marcusinthesky.github.io/exordio/blog/exordio-spell-good-beginnings/",
     local: false,
   },
   {

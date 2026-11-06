@@ -30,7 +30,7 @@ await Promise.all([
   writeJson("projects.json", projects),
   writeJson(
     "writing.json",
-    [...writing].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)),
+    [...writing].sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "")),
   ),
   writeJson("cv.json", { profile, experience, education, openSourceContributions }),
   writeJson("methods.json", methods),
@@ -43,14 +43,14 @@ const escapeXml = (value: string) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 
-const orderedWriting = [...writing].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+const orderedWriting = [...writing].sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
 const rssItems = orderedWriting
   .map(
     (entry) => `    <item>
       <title>${escapeXml(entry.title)}</title>
       <link>${escapeXml(entry.canonicalUrl)}</link>
       <guid isPermaLink="true">${escapeXml(entry.canonicalUrl)}</guid>
-      <pubDate>${new Date(`${entry.publishedAt}T12:00:00Z`).toUTCString()}</pubDate>
+      ${entry.publishedAt ? `<pubDate>${new Date(`${entry.publishedAt}T12:00:00Z`).toUTCString()}</pubDate>` : ""}
       <description>${escapeXml(entry.summary)}</description>
       <source url="${siteUrl}/feed.xml">${escapeXml(entry.source)}</source>
     </item>`,
@@ -86,7 +86,7 @@ await Bun.write(
         url: entry.canonicalUrl,
         title: entry.title,
         summary: entry.summary,
-        date_published: `${entry.publishedAt}T12:00:00Z`,
+        ...(entry.publishedAt ? { date_published: `${entry.publishedAt}T12:00:00Z` } : {}),
         tags: [entry.source],
       })),
     },

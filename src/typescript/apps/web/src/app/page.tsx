@@ -74,7 +74,7 @@ const projectPreviews: Record<string, { alt: string; label: string; src: string 
 export default function HomePage() {
   const featured = projects.filter(({ featured }) => featured);
   const recentWriting = [...writing]
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+    .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""))
     .slice(0, 3);
 
   return (

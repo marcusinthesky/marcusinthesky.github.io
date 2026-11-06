@@ -17,9 +17,11 @@ export function WritingRecord({
     <Record
       meta={
         <>
-          <time className="tabular-nums" dateTime={entry.publishedAt}>
-            {published.format(new Date(entry.publishedAt))}
-          </time>
+          {entry.publishedAt ? (
+            <time className="tabular-nums" dateTime={entry.publishedAt}>
+              {published.format(new Date(entry.publishedAt))}
+            </time>
+          ) : null}
           <span>{entry.source}</span>
         </>
       }

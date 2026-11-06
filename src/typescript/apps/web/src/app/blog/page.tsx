@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function BlogPage() {
-  const orderedWriting = [...writing].sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
+  const orderedWriting = [...writing].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   return (
     <div className="page-shell" data-chapter="rose" data-nav="writing">
       <PageHeader

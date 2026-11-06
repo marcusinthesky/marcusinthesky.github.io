@@ -2,6 +2,7 @@ import { circulation, type Circulation } from "@marcusinthesky/content";
 
 const groups: readonly (readonly [Circulation["kind"], string])[] = [
   ["presentation", "Presented at"],
+  ["editorial", "Published in"],
   ["paper", "Papers and preprints"],
   ["software", "Models and software"],
   ["education", "Education"],

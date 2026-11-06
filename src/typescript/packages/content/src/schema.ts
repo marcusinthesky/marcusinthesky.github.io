@@ -110,7 +110,7 @@ export const methodSchema = z.object({
  * same kind of credential.
  */
 export const circulationSchema = z.object({
-  kind: z.enum(["presentation", "paper", "software", "education"]),
+  kind: z.enum(["presentation", "editorial", "paper", "software", "education"]),
   name: z.string().min(1),
   /** What happened there, when content supports it. */
   detail: z.string().min(1).optional(),

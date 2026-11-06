@@ -210,6 +210,39 @@ export const projects = projectSchema.array().parse([
 
 export const writing = writingSchema.array().parse([
   {
+    slug: "pretraining-for-economists",
+    title: "Why use Pretraining?",
+    summary:
+      "How pretraining reduces what small datasets must teach a model, and how Bayesian updating explains the promise and limits of transfer.",
+    source: "Pricing Perspective",
+    publishedAt: "2026-10-17",
+    canonicalUrl:
+      "https://marcusinthesky.github.io/PricingPerspective/blog/pretraining-for-economists/",
+    local: false,
+  },
+  {
+    slug: "explainability-as-learning",
+    title: "Learn, then Explain",
+    summary:
+      "Statistical learning, economic mechanisms, and the limits of prediction: why explanation in finance is part of scientific inference.",
+    source: "Pricing Perspective",
+    publishedAt: "2026-10-15",
+    canonicalUrl:
+      "https://marcusinthesky.github.io/PricingPerspective/blog/explainability-as-learning/",
+    local: false,
+  },
+  {
+    slug: "exordio-spell-good-beginnings",
+    title: "Exordio: A Spell for Good Beginnings",
+    summary:
+      "Why a repository's knowledge, tooling, validation rules and reproducible environment matter for building software with AI agents.",
+    source: "Exordio",
+    publishedAt: "2026-11-03",
+    canonicalUrl:
+      "https://marcusinthesky.github.io/exordio/blog/exordio-spell-good-beginnings/",
+    local: false,
+  },
+  {
     slug: "mega-ipos-ai-economic-measurement",
     title: "No returns: Mega-IPOs and the promise of AI as economic measurement",
     summary:
@@ -518,6 +551,12 @@ const thesis = publications.find(({ slug }) => slug === "pricing-offshore-servic
  * relationship. Details are derived from the records above where possible.
  */
 export const circulation = circulationSchema.array().parse([
+  {
+    kind: "editorial",
+    name: "CFA Institute",
+    detail: "Enterprising Investor · 22 October 2026",
+    href: "https://rpc.cfainstitute.org/blogs/enterprising-investor/2026/do-large-language-models-need-markowitz-moment",
+  },
   {
     kind: "presentation",
     name: "World Finance & Banking Symposium",

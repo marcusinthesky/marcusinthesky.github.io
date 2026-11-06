@@ -42,6 +42,16 @@ describe("public content", () => {
     }
   });
 
+  test("CFA Institute publication is linked to the original article", () => {
+    expect(circulation.find((entry) => entry.name === "CFA Institute")?.href).toBe(
+      "https://rpc.cfainstitute.org/blogs/enterprising-investor/2026/do-large-language-models-need-markowitz-moment",
+    );
+  });
+
+  test("linked essays have distinct canonical URLs", () => {
+    expect(new Set(writing.map((entry) => entry.canonicalUrl)).size).toBe(writing.length);
+  });
+
   test("every circulation entry has a destination", () => {
     for (const entry of circulation) expect(entry.href.length).toBeGreaterThan(0);
   });

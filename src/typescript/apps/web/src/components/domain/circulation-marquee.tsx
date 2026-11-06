@@ -9,6 +9,12 @@ const serifMark = "font-serif text-[clamp(1.2rem,1.9vw,1.65rem)] tracking-[-0.03
 /** How each venue is drawn; names and destinations come from the content record. */
 const marks: Record<string, ReactNode> = {
   // The symposium publishes no logo of its own; set in the WFC wordmark style.
+  // The Institute's logo requires separate written permission; use a plain-text mark.
+  "CFA Institute": (
+    <span className="font-sans text-[clamp(0.95rem,1.5vw,1.25rem)] font-semibold tracking-[-0.04em]">
+      CFA Institute
+    </span>
+  ),
   "World Finance & Banking Symposium": (
     <span className="label-sm leading-tight">
       World Finance &amp;
